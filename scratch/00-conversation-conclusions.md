@@ -309,6 +309,38 @@ All TF documents now have explicit epistemic status labels:
 - TF-07: Derived + Empirical (was just "Derived")
 - TF-08: Derived + Hypothesis (was just "Derived")
 
+## Session 3: Addressing Codex/Gemini Review Feedback
+
+### Changes Made
+
+1. **TF-01b: Fixed causal information decomposition** (Codex flagged as tautological).
+   Old: I(o; Ω | M) = I(o; Ω | M, a) + [I(o; Ω | M) - I(o; Ω | M, a)]
+   — this was literally X = Y + (X-Y), always true, no content.
+   New: Defined Causal Information Yield (CIY) as genuine quantity:
+   CIY(a) = I(o; a | M) - I(o; a | Ω, M)
+   — total action-observation dependence minus non-causal component.
+   CIY = 0 for passive observers; CIY > 0 when actions causally affect environment.
+
+2. **TF-08: Resolved adaptive tempo notation** (Codex flagged).
+   Canonical: T = Σ_k ν^(k) · η^(k)*. Single-channel as explicit special case.
+   Note that T ≡ ν_eff from TF-03.
+
+3. **TF-06: Deduplicated Pearl's hierarchy** (Codex flagged).
+   Now references TF-01b rather than re-deriving.
+
+4. **TF-00: Created notation appendix** (both reviewers recommended).
+
+5. **README: Updated** with TF-00, resolved items, multi-channel T definition.
+
+### Still Pending from Reviews
+
+- Convert central claims to explicit theorem/proof-sketch format
+- TF-03 track decision (minimal async vs. full stochastic process)
+- Scope boundaries as first-class document
+- Gemini suggestions: Lyapunov framing, reward-as-value-channel, tensor T,
+  IB-based structural adaptation threshold
+- Citation confidence tiers for v7 references
+
 ### Notes on Evolution of TF-01
 
 TF-01 is currently a scope definition, not an axiom. If we eventually find

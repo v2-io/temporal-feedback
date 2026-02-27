@@ -81,11 +81,17 @@ This spectrum matters because many interesting agents — including current LLMs
 
 The causal axiom constrains the update rule (TF-05) in a specific way: the model should give more weight to observations that are **causally downstream** of the agent's actions than to observations that would have occurred regardless. This is because action-contingent observations carry interventional (Level 2) information, while action-independent observations carry only associational (Level 1) information.
 
-Formally, the information content of an observation decomposes:
+Formally, define the **causal information yield** of action $a_{t-1}$:
 
-$$I(o_t; \Omega_t \mid M_{t-1}) = \underbrace{I(o_t; \Omega_t \mid M_{t-1}, a_{t-1})}_{\text{action-independent}} + \underbrace{I(o_t; \Omega_t \mid M_{t-1}) - I(o_t; \Omega_t \mid M_{t-1}, a_{t-1})}_{\text{action-contingent (causal)}}$$
+$$\text{CIY}(a_{t-1}) = I(o_t; a_{t-1} \mid M_{t-1}) - I(o_t; a_{t-1} \mid \Omega_t, M_{t-1})$$
 
-The second term — how much more you learn from $o_t$ by knowing what action you took — is the *causal information yield* of the action. Maximizing this quantity is exactly what good exploration (TF-06) does.
+The first term is the total statistical dependence between the observation and the action (given the model). The second term is the dependence that would remain even if the true environment state were known — i.e., the non-causal component (confounding through shared history, etc.).
+
+The difference — the causal information yield — measures how much of the action-observation correlation is *mediated by the environment's causal response* to the action. When $\text{CIY} > 0$, the observation carries information about how the environment responds to interventions, not merely about correlations in the agent's history.
+
+**Why this is non-trivial**: $\text{CIY} = 0$ for a passive observer (no action, or action independent of environment response). $\text{CIY} > 0$ when the agent's action causally affects the environment state, which in turn affects the observation. This is precisely the information that distinguishes Level 2 (interventional) from Level 1 (associational) epistemic access.
+
+Maximizing causal information yield is exactly what good exploration (TF-06) does: choosing actions whose consequences are maximally informative about the causal structure of the environment.
 
 ## Connection to Temporal Continuity
 

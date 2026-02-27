@@ -10,6 +10,7 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 
 | # | Name | Type | Status |
 |---|------|------|--------|
+| [TF-00](TF-00.md) | Notation and Conventions | Reference | Draft |
 | [TF-01](TF-01.md) | Scope — Adaptive Agents Under Uncertainty | Scope Definition | Draft |
 | [TF-01b](TF-01b.md) | Causal Structure | Axiom | Draft — may become TF-02, pushing others down |
 | [TF-02](TF-02.md) | The Model | Axiom | Draft |
@@ -45,13 +46,13 @@ From these, the remaining results follow:
 - The **update gain** (TF-05) balances model uncertainty against observation uncertainty, with the Kalman gain, Bayesian posterior weight, and RL learning rate as special cases of a common form.
 - **Action selection** (TF-06) is a function of the model, with implicit/habitual action as the norm and deliberation as the fallback. The exploration-exploitation trade-off connects to maximizing causal information yield (TF-01b).
 - **Structural adaptation** (TF-07) — changing the model class, not just its parameters — is necessary when the model class itself is inadequate.
-- **Temporal nesting** (TF-08) and the concept of **adaptive tempo** ($\mathcal{T} = \nu \cdot \eta^*$) yield the persistence threshold and formalize adversarial advantage.
+- **Temporal nesting** (TF-08) and the concept of **adaptive tempo** ($\mathcal{T} = \sum_k \nu^{(k)} \cdot \eta^{(k)*}$) yield the persistence threshold and formalize adversarial advantage.
 
 ## What's Probably Missing
 
 **TF-01 may not be the right starting axiom.** The current TF-01 is a scope definition + primitive objects. If a more fundamental axiom exists (analogous to TST's T-01, which is a clean tautology about time optimality), it hasn't been identified yet. TF-01b (causal structure) is a candidate for the true foundational axiom — the arrow of time may be more primitive than the agent-environment distinction. This structural question remains open.
 
-**Causality is now addressed but may need further integration.** TF-01b grounds causality in temporal ordering and establishes Pearl's hierarchy as levels of epistemic access. TF-06 still contains the Pearl discussion as well — these may need reconciliation (TF-06 should reference TF-01b's foundation rather than re-introducing the hierarchy). The causal information yield decomposition in TF-01b also connects to TF-04's mismatch signal in ways not yet fully threaded through.
+**Causality is addressed and partially integrated.** TF-01b grounds causality in temporal ordering and establishes Pearl's hierarchy as levels of epistemic access. TF-06 now references TF-01b's foundation rather than re-deriving the hierarchy. The causal information yield (CIY) is defined in TF-01b as a genuine information-theoretic quantity; its connection to TF-04's mismatch signal (the mismatch conditioned on action carries interventional information) is noted but not yet formally threaded through as a theorem.
 
 **Compression quality as a standalone result.** The nature of the compression (what the model preserves vs. discards) determines the agent's capabilities and blind spots. This connects to rate-distortion theory and representation learning. Currently embedded in TF-02's information bottleneck formulation; may warrant its own TF if it generates distinct derived results.
 
