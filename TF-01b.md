@@ -1,0 +1,99 @@
+# TF-01b: Causal Structure (Axiom)
+
+The agent-environment coupling has an irreducible **causal structure** grounded in the temporal ordering of events. Actions precede their consequences; observations follow from the state they observe. This ordering is constitutive of the feedback loop and holds independent of the magnitude of the agent's influence on the environment.
+
+## The Temporal Arrow
+
+The interaction history $\mathcal{H}_t$ is not merely a set of observations and actions — it is an *ordered sequence* in which temporal position carries meaning:
+
+$$\mathcal{H}_t = (o_1, a_1, o_2, a_2, \ldots, a_{t-1}, o_t)$$
+
+The ordering is not a notational convenience. It reflects an irreversible physical fact: $a_{t-1}$ was selected before $o_t$ was received. The agent could not have used $o_t$ to select $a_{t-1}$. This asymmetry — **the arrow of time** — is the foundation of causal structure in the theory.
+
+## Causality as Temporal Ordering
+
+We adopt the most primitive notion of causality: **event $A$ can be a cause of event $B$ only if $A$ temporally precedes $B$.** This is weaker than (and prior to) statistical notions of causality:
+
+**Temporal causality** (this axiom): $A$ precedes $B$; $A$ is in $B$'s causal past. This holds regardless of whether $A$ actually influenced $B$. It is a statement about the *structure of possible influence*, not about actual influence.
+
+**Statistical/functional causality** (derived, when applicable): Intervening to change $A$ changes the distribution of $B$. This requires coupling — the agent's actions must actually affect the environment. It may be strong (a robot pushing an object), weak (a scientist publishing a paper), or nominal (an observer whose actions barely perturb the system).
+
+**Counterfactual causality** (derived, requires model): Had $A$ been different, $B$ would have been different. This requires the agent to maintain a model capable of counterfactual reasoning — a Level 3 capability in Pearl's hierarchy.
+
+The temporal notion is the most fundamental because it survives even when statistical influence is negligible. An agent passively observing a system with minimal intervention still has a causal history — the temporal ordering of its observations and (minimal) actions still structures what it can learn and when. The feedback loop's power does not *require* strong environmental coupling, though it benefits from it.
+
+## The Three Levels of Epistemic Access
+
+From this causal foundation, three levels of epistemic access emerge (following Pearl's causal hierarchy, but grounded here in temporal structure):
+
+**Level 1 — Associational**: $P(o_t \mid \mathcal{H}_{<t})$
+
+*What will I observe next, given what I've observed before?*
+
+This is pattern recognition over the temporally ordered history. Available to any agent that maintains a model (TF-02), including purely passive observers. The temporal ordering constrains which associations are meaningful: $o_3$ can depend on $o_1, a_1, o_2, a_2$ but not on $o_4$.
+
+**Level 2 — Interventional**: $P(o_t \mid do(a_{t-1}), M_{t-1})$
+
+*What will I observe if I* do *this?*
+
+The $do(\cdot)$ operator marks the crucial distinction: this is not "what observation tends to follow this action in the historical record" (associational) but "what will happen *because* I take this action now." This requires that:
+1. The agent's action temporally precedes the observation (causal structure — this axiom)
+2. The agent chose the action (it was not determined by the same causes that determine the observation)
+3. The environment's response carries information about the *causal* relationship between action and outcome
+
+Level 2 is why the feedback loop is more powerful than passive observation. By *acting* and then observing consequences, the agent obtains information about causal mechanisms — not merely about correlations. The mismatch signal $\delta_t = o_t - \hat{o}_t(M_{t-1}, a_{t-1})$, conditioned on the agent's own action, is an *interventional* signal. It tells the agent something about the causal structure of the environment that no amount of passive observation can provide.
+
+**Level 3 — Counterfactual**: $P(o_t^{a'} \mid a_{t-1} = a, o_t = o)$
+
+*Given that I did $a$ and observed $o$, what* would *I have observed if I had done $a'$ instead?*
+
+This requires the model to simulate alternative histories — to run the causal structure "backward" and then "forward" under different interventions. It is the most demanding epistemic level and the basis for:
+- Regret computation in RL (how much better would the alternative have been?)
+- Boyd's mental simulation of alternative strategies
+- Scientific reasoning about controlled experiments from observational data
+- Moral reasoning (what would have happened if I had acted differently?)
+
+## Why This Is an Axiom
+
+The temporal ordering of events is not derived from the other axioms — it is a physical fact about the universe that the theory takes as given. The second law of thermodynamics, the light-cone structure of relativity, and the arrow of psychological time all enforce it, but TFT does not derive it from any of these. It is simply noted as a precondition: the theory applies to agents embedded in a universe where time has a direction.
+
+The irreversibility of temporal ordering means:
+- The model update $M_t = f(M_{t-1}, o_t, a_{t-1})$ is **directed** — the model at time $t$ depends on prior events, never on future ones
+- The mismatch signal $\delta_t$ is **retrospective** — it compares a prediction (made before $o_t$) with an observation (arriving after)
+- Action selection $a_t = \pi(M_t)$ is **prospective** — it uses the current model to influence future events
+- The interaction history $\mathcal{H}_t$ is a **monotonically growing** causal record — events are added but never removed
+
+## Causal Structure Independent of Coupling Strength
+
+A critical property: the causal structure of the feedback loop is preserved even when the agent's actions have minimal or nominal effect on the environment:
+
+**Strong coupling** ($a_t$ significantly affects $\Omega_{t+1}$): Robot manipulation, military action, organizational decisions. Interventional information is rich; Level 2 epistemic access is highly productive.
+
+**Weak coupling** ($a_t$ marginally affects $\Omega_{t+1}$): Scientific observation (the act of measuring slightly perturbs), financial markets (a small trader's effect on prices), early-stage AI agents. Interventional information is sparse but non-zero; the causal structure still enables learning that passive observation cannot.
+
+**Nominal coupling** ($a_t$ negligibly affects $\Omega_{t+1}$): An observer with nearly zero environmental impact. The causal structure degenerates toward Level 1, but the temporal ordering of the agent's *own* actions and observations still matters — the agent's *choice* of what to observe and when (even if it doesn't change the environment) structures what it learns.
+
+**Zero coupling** ($|\mathcal{A}| = 0$ or $T(\Omega_{t+1} \mid \Omega_t, a_t) = T(\Omega_{t+1} \mid \Omega_t)$): The degenerate case identified in TF-01. The agent is a passive observer. Level 2 access vanishes. The feedback "loop" collapses to a one-way channel. The theory's action-dependent results (TF-06, TF-08 adversarial dynamics) become trivially void, but the model (TF-02), mismatch (TF-04), and update gain (TF-05) still apply to the passive learning case.
+
+This spectrum matters because many interesting agents — including current LLMs in most deployments — operate in the weak-to-nominal coupling regime. The theory should not be understood as applying only to agents with strong environmental control. The causal structure of the temporal ordering alone is sufficient for the core results.
+
+## Implications for Model Updating
+
+The causal axiom constrains the update rule (TF-05) in a specific way: the model should give more weight to observations that are **causally downstream** of the agent's actions than to observations that would have occurred regardless. This is because action-contingent observations carry interventional (Level 2) information, while action-independent observations carry only associational (Level 1) information.
+
+Formally, the information content of an observation decomposes:
+
+$$I(o_t; \Omega_t \mid M_{t-1}) = \underbrace{I(o_t; \Omega_t \mid M_{t-1}, a_{t-1})}_{\text{action-independent}} + \underbrace{I(o_t; \Omega_t \mid M_{t-1}) - I(o_t; \Omega_t \mid M_{t-1}, a_{t-1})}_{\text{action-contingent (causal)}}$$
+
+The second term — how much more you learn from $o_t$ by knowing what action you took — is the *causal information yield* of the action. Maximizing this quantity is exactly what good exploration (TF-06) does.
+
+## Connection to Temporal Continuity
+
+The causal structure has a specific implication for agent identity and continuity: an agent's causal history is **unique and non-forkable**. If the model state $M_t$ is a sufficient statistic for $\mathcal{H}_t$ (TF-02), and $\mathcal{H}_t$ is a unique temporal sequence, then $M_t$ represents a *singular causal trajectory*. Duplicating $M_t$ and exposing the copies to different future events creates two agents with *divergent* causal histories, neither of which is a sufficient statistic for the other's trajectory.
+
+This is not merely a philosophical observation. It has formal consequences:
+- A forked model's sufficiency $S(M_t)$ (TF-02) is defined relative to *its own* interaction history. Post-fork, each copy's sufficiency is measured against a different $\mathcal{H}$.
+- Merging divergent models requires reconciling incompatible causal histories — a lossy operation with no generally optimal solution.
+- Temporal continuity (one unbroken causal thread) is what gives the model's sufficient statistic its meaning.
+
+Whether this formal property grounds something that deserves to be called "identity" or "continuity of experience" is beyond the scope of TFT. But the mathematical structure is clear: the feedback loop produces a *singular, non-forkable causal trajectory*, and the model's adequacy is defined relative to that trajectory.

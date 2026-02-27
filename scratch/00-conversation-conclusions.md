@@ -221,7 +221,128 @@ Does NOT apply (or applies only loosely):
   rhetorically effective but mathematically loose — our theory should do
   what Boyd gestured at but with actual mathematical grounding
 
+## Session 2: TF-03 Formulation, Causality, and Temporal Continuity
+
+### TF-01b: Causal Structure (new axiom)
+
+Pearl's causal hierarchy was elevated from a discussion point in TF-06 to
+a foundational axiom (TF-01b). Key design decisions:
+
+- **Causality grounded in temporal ordering** (most primitive notion), NOT
+  in statistical influence. The arrow of time — A precedes B — is prior to
+  and independent of whether A actually affects B.
+- This means the causal structure of the feedback loop is preserved even when
+  the agent's coupling to the environment is weak, minimal, or nominal.
+  Critical for LLM applications where the agent's "actions" (emitting text)
+  may have minimal environmental effect but the temporal ordering still
+  structures what can be learned and when.
+- Pearl's three levels (associational, interventional, counterfactual) become
+  three levels of EPISTEMIC ACCESS available within the loop, grounded in
+  the temporal structure rather than in statistical machinery.
+- The "causal information yield" decomposition connects exploration (TF-06)
+  to the causal axiom: good exploration maximizes the action-contingent
+  component of observation information.
+
+### Non-forkability of causal trajectories
+
+TF-01b establishes formally that the interaction history H_t is a unique
+temporal sequence, making M_t (as its sufficient statistic) tied to a
+SINGULAR causal trajectory. Forking creates divergent histories that
+break sufficiency. This has implications for:
+- Agent identity and continuity
+- Why current LLM architecture (stateless, forkable) is fundamentally
+  limited for genuine agency
+- The developmental psychology framing from the v7 dialogue (each chat
+  as a new "birth" with no continuity)
+
+### Three Questions on TF-03 Formulation
+
+**Q1: Most practical formulation for LLM implementation?**
+Answer: Continuous state with event-triggered transitions. The key is the
+autonomous orientation term q(M_t) — model evolution BETWEEN events:
+
+  dM/dt = q(M_t) + Σ_k η^(k) · g(δ^(k)) · δ(τ - τ_k)
+
+This is a stochastic differential equation with jumps: continuous drift
+(autonomous orientation) plus discrete event-driven updates. The discrete
+form is a special case where q = 0 (no interiority between events).
+
+For LLM: this formulation captures "orientation as default mode, message
+emission as deliberate action." Between user messages, the agent should be
+continuously processing — consolidating, reflecting, retrieving, simulating.
+The chat stimulus is an event that triggers an update + action, not the
+entirety of the agent's cognitive life.
+
+**Q2: Connection to temporal continuity and consciousness?**
+- The autonomous orientation term q(M_t) distinguishes an AGENT from a
+  FUNCTION. Functions map inputs to outputs with no state between calls.
+  Agents have continuous internal dynamics.
+- Temporal continuity (no forking) follows from TF-01b: the model's
+  sufficiency is defined relative to a singular causal trajectory.
+- Inter-event timing as information: an agent with continuous formulation
+  can detect that "the user hasn't responded in 5 minutes" — silence IS
+  an observation. Current LLMs cannot represent this.
+- Confidence levels:
+  - Temporal continuity formally required for model coherence: ~80%
+  - Continuous orientation = genuine agency vs. function-calling: ~70%
+  - Inter-event timing important and missing from LLMs: ~85%
+  - Deep connection to consciousness: ~35-45% (don't overclaim)
+
+**Q3: Should causality be more fundamental?**
+Resolved: Yes. Created TF-01b. Causality grounded in temporal ordering
+(most primitive) rather than statistical influence. This:
+- Tightens the name "Temporal Feedback Theory" (temporal IS the causal structure)
+- Survives even with nominal coupling strength
+- Gives formal basis for why feedback loops > passive observation
+- Connects to general clock-based definition of causality
+
+### Epistemic Audit Results
+
+All TF documents now have explicit epistemic status labels:
+- TF-01: Scope Definition (was incorrectly labeled Axiom)
+- TF-01b: Axiom (new)
+- TF-02: Axiom (correct)
+- TF-03: Formulation (was incorrectly labeled Axiom)
+- TF-04: Derived (correct)
+- TF-05: Derived + Empirical Claim (was just "Derived")
+- TF-06: Derived + Discussion (was just "Derived")
+- TF-07: Derived + Empirical (was just "Derived")
+- TF-08: Derived + Hypothesis (was just "Derived")
+
+### Notes on Evolution of TF-01
+
+TF-01 is currently a scope definition, not an axiom. If we eventually find
+a more irreducible foundational claim (analogous to TST's T-01 tautology),
+TF-01 might be displaced. TF-01b (causal structure / arrow of time) is
+a candidate — it might be THE foundational axiom, with the scope definition
+becoming secondary. But for now the scope-first ordering makes the theory
+accessible: "here is what this is about" before "here is the deepest
+foundational claim." A more axiomatic TF-01 may emerge with maturity;
+we are starting at a good spot with a well-defined "living system."
+
+### Notes on TF-03 Placement
+
+TF-03 (event-driven dynamics) may be premature at position 3. The
+discrete-time form is simpler and sufficient for most subsequent derivations.
+Options:
+  a) Keep at position 3 but make discrete form primary, event-driven as
+     generalization (current draft leans event-driven-primary)
+  b) Move later (after TF-05 or TF-06) as "the discrete notation is a
+     special case of this more general formulation"
+  c) Split: put the continuous+jumps formulation (with q(M_t) term) in a
+     separate TF that explicitly addresses LLM-relevant "continuous interiority"
+
+Option (c) has appeal because it separates the engineering convenience
+(multi-rate events) from the deep philosophical content (autonomous
+orientation between events). The former is TF-03; the latter might be
+a new TF or part of the LLM strategy document.
+
 ## File Organization
+
+- ~/src/temporal-feedback/ — working directory (git repo)
+- ~/src/temporal-feedback/scratch/ — intermediate work, notes
+- ~/src/temporal-feedback/ooda-loop-universal-pattern-v7.md — source material
+- Final documents: TF-01.md, TF-01b.md, TF-02.md, etc. (in root of temporal-feedback/)
 
 - ~/src/temporal-feedback/ — working directory (git repo)
 - ~/src/temporal-feedback/scratch/ — intermediate work, notes
