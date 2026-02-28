@@ -677,9 +677,18 @@ a new TF or part of the LLM strategy document.
 - ~/src/temporal-feedback/ — working directory (git repo)
 - ~/src/temporal-feedback/scratch/ — intermediate work, notes
 - ~/src/temporal-feedback/ooda-loop-universal-pattern-v7.md — source material
-- Final documents: TF-01.md, TF-01b.md, TF-02.md, etc. (in root of temporal-feedback/)
+- Final documents: TF-01.md through TF-11.md + Appendix-A-Lyapunov.md (in root of temporal-feedback/)
 
-- ~/src/temporal-feedback/ — working directory (git repo)
-- ~/src/temporal-feedback/scratch/ — intermediate work, notes
-- ~/src/temporal-feedback/ooda-loop-universal-pattern-v7.md — source material
-- Final documents: TF-01.md, TF-02.md, etc. (in root of temporal-feedback/)
+## Session 7: Full Restructure (items 50+)
+
+50. **Major restructure following TST pattern.** Renumbered all documents:
+    - Old TF-01b → TF-02, old TF-02 → TF-03, etc.
+    - Split old TF-06 (161 lines, 5+ ideas) into TF-07 (Action Selection) and TF-08 (Exploration-Exploitation Balance)
+    - Old TF-06.5 → TF-09, old TF-07 → TF-10, old TF-08 → TF-11
+    - Renumbered propositions: Prop 4.1→5.1, Prop 6.5.1→9.1, Prop 7.1→10.1, Prop 8.1→11.1
+    - Updated ALL cross-references across ALL documents
+    - TF-00 kept as-is (references updated only)
+    - Appendix A proposition numbers (A.1-A.4) unchanged
+    - Eliminated awkward 01b and 06.5 suffixes
+    - 11 numbered docs + 1 appendix (matches TST's 12)
+    - Line counts now 42-265 (mean ~76 excl. appendix, down from ~113)
