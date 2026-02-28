@@ -83,7 +83,7 @@ For the main results, we use the weaker local form:
 
 There exists a region $\mathcal{B}_R = \{\delta : \|\delta\| \leq R\}$ and $\alpha > 0$ such that:
 
-*[Assumption A2']*
+*[Assumption A2' (sector-condition)]*
 $$\delta^T F(\mathcal{T}, \delta) \geq \alpha \|\delta\|^2 \quad \forall \delta \in \mathcal{B}_R$$
 
 This allows the correction to break down outside $\mathcal{B}_R$ — the structural adaptation regime of TF-10.
@@ -143,7 +143,7 @@ The agent persists iff $R^* < R$, i.e., iff $\rho/\alpha < R$, i.e., iff $\alpha
 
 **Statement.** Under the conditions of A.1, the agent can tolerate a sudden increase in disturbance rate of:
 
-*[Derived (Proposition A.2)]*
+*[Derived (adaptive-reserve)]*
 $$\Delta\rho^* = \alpha R - \rho$$
 
 without mismatch diverging (where $R$ is the radius of the sector-condition region from A2'). Beyond this, $R^*$ exceeds $R$ and the correction function may fail.

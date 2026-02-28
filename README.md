@@ -4,6 +4,8 @@ A first-principles formal theory of adaptive feedback: how agents persist and ad
 
 This theory proposes a formal structure underlying Boyd's OODA loop, Kalman filtering, reinforcement learning, PID control, Bayesian inference, active inference, PDCA/Lean, biological immune systems, and organizational learning — analyzing each as an *instance* of a common adaptive pattern rather than independent frameworks. The degree to which this structural analogy constitutes genuine unification (vs. a useful modeling lens) is itself an open question addressed throughout.
 
+TFT provides a **shared formal vocabulary** across adaptive-system disciplines. It enables a control theorist, an RL researcher, an organizational strategist, and a military planner to describe the same underlying adaptive mechanics using the same mathematical objects — mismatch, gain, tempo, reserve — with domain-specific instantiations that are formally comparable. The theory's primary utility today is as a *diagnostic and design framework*: it identifies failure modes (under-updating, over-updating, parametric vs. structural inadequacy, tempo insufficiency, reserve depletion) using quantities that can be estimated from system traces (see [Appendix B](Appendix-B-Operationalization.md)).
+
 The document structure is modeled on [Temporal Software Theory](../temporal-software-theory/), building piece by piece from axioms through definitions to derived results, with each claim's epistemic status explicitly marked.
 
 ## Table of Contents
@@ -23,7 +25,18 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 | [TF-10](TF-10.md) | Structural Adaptation | Derived + Empirical | Draft |
 | [TF-11](TF-11.md) | Temporal Nesting and Adaptive Tempo | Derived + Hypothesis | Draft |
 | [Appendix A](Appendix-A-Lyapunov.md) | Lyapunov Stability Analysis | Derived (from sector-condition assumptions) | Draft |
-| [Appendix B](Appendix-B-Operationalization.md) | Operationalization and Worked Example | Procedures + Worked Example | Draft |
+| [Appendix B](Appendix-B-Operationalization.md) | Operationalization: Estimation Procedures | Procedures | Draft |
+| [Appendix C](Appendix-C-Kalman-Example.md) | Worked Example — 1D Active Tracking (Kalman) | Worked Example | Draft |
+| [Appendix D](Appendix-D-RL-Example.md) | Worked Example — Nonstationary Bandit (RL) | Worked Example | Draft |
+| [Appendix E](Appendix-E-TFT-Core.md) | TFT Core: Minimal Formal Path | Reference | Draft |
+
+## Reading Guide
+
+**Core theorem path** (minimal chain for the main formal results): TF-01 (scope) → TF-03 (model) → TF-05 (mismatch) → TF-06 (gain) → TF-11 (tempo & persistence) → Appendix A (Lyapunov stability). This chain contains all formal propositions and can be read in ~45 minutes. [Appendix E](Appendix-E-TFT-Core.md) presents this chain as a self-contained condensed reference.
+
+**Supporting material**: TF-00 (notation — consult as needed), TF-02 (causal structure — foundational but conceptual), TF-04 (event-driven dynamics — generalizes discrete-time notation), TF-07 (action selection), TF-08 (exploration-exploitation), TF-09 (deliberation cost), TF-10 (structural adaptation). These enrich the theory with conceptual depth and domain connections but are not required for the main formal results.
+
+**Operationalization**: Appendix B (estimation procedures), Appendix C (Kalman worked example — exact mapping), and Appendix D (RL worked example — approximate mapping). Start here if you want to *apply* TFT to a specific system.
 
 ## Epistemic Status Legend
 
@@ -63,7 +76,7 @@ From these, the remaining results follow:
 
 **Scope boundaries document.** The v7 source material had a section on where the OODA pattern breaks down (pure math, self-organizing systems, aesthetics). This should be carried forward, possibly as an appendix or a specific TF on boundaries.
 
-**A formal domain instantiation appendix.** [Appendix B](Appendix-B-Operationalization.md) now provides an initial operationalization framework and one end-to-end worked example. A fuller consolidated mapping across all domains (Kalman, RL, PID, Bayesian, Boyd, PDCA, immune, organizational) is still pending.
+**A formal domain instantiation appendix.** [Appendix B](Appendix-B-Operationalization.md) provides the operationalization framework, [Appendix C](Appendix-C-Kalman-Example.md) gives an exact end-to-end Kalman instantiation, and [Appendix D](Appendix-D-RL-Example.md) gives an approximate RL instantiation. A fuller consolidated mapping across all domains (PID, Bayesian, Boyd, PDCA, immune, organizational) is still pending.
 
 ## What's Potentially Missing
 
@@ -87,7 +100,7 @@ If TFT's core claims are wrong, specific observable failures should occur. These
 
 3. **Speed-quality substitutability.** TF-11 predicts that $\mathcal{T} = \nu \cdot \eta^*$: doubling update quality has the same effect on steady-state mismatch as doubling event rate. **Falsified if**: in a controlled experiment, doubling $\eta^*$ (better model calibration) produces a systematically different effect on $\|\delta\|_{ss}$ than doubling $\nu$ (faster observation), after controlling for other factors. Non-substitutability would indicate the multiplicative structure is wrong.
 
-4. **Adversarial tempo advantage.** TF-11 and Appendix A predict that a faster-adapting agent creates disproportionate mismatch in the slower one, with the advantage governed by $\gamma_A \cdot \mathcal{T}_A$ vs. $\Delta\rho^*_B$. **Falsified if**: in adversarial settings, tempo advantage does not compound — i.e., doubling one agent's tempo relative to the other produces only a linear (not superlinear) increase in the slower agent's mismatch. This would indicate the coupling model is too simple.
+4. **Adversarial tempo advantage (Corollary 11.2).** TF-11's Corollary 11.2 predicts that steady-state mismatch ratio scales with the *square* of the tempo ratio: $\|\delta_B\|_{ss}/\|\delta_A\|_{ss} \approx (\gamma_A/\gamma_B)(\mathcal{T}_A/\mathcal{T}_B)^2$. Appendix A predicts that destabilization occurs when $\gamma_A \cdot \mathcal{T}_A > \Delta\rho^*_B$. **Falsified if**: in adversarial settings, tempo advantage does not compound — i.e., doubling one agent's tempo relative to the other produces only a linear (not superlinear) increase in the slower agent's mismatch. This would indicate the coupling model is too simple.
 
 5. **Structural adaptation trigger.** TF-10 predicts that persistent structured residuals (autocorrelated, patterned mismatch) after parametric convergence indicate model class inadequacy, and that switching model classes should reduce the mismatch floor. **Falsified if**: systematic residual patterns persist despite model class changes that provably increase $\mathcal{F}(\mathcal{M})$. This would indicate that structured residuals can arise from sources other than model class limitations (e.g., systematic observation bias not captured by TF-01's noise model).
 

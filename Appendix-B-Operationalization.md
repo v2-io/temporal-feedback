@@ -1,4 +1,4 @@
-# Appendix B: Operationalization and Worked Example
+# Appendix B: Operationalization — Estimation Procedures
 
 **Epistemic status**: This appendix is a procedures document. It specifies estimation recipes for core TFT quantities and gives one compact end-to-end worked example that instantiates the full chain from TF-01 through Appendix A under explicit assumptions.
 
@@ -51,6 +51,8 @@ $$\hat{\rho}(t) = \left[\frac{s_{t+\Delta t} - s_t}{\Delta t} + \hat{\mathcal{T}
 
 where $[x]_+ = \max(x, 0)$ and $\hat{\mathcal{T}}_t$ is estimated adaptive tempo.
 
+**Note on estimation sequencing.** This estimator requires $\hat{\mathcal{T}}_t$, which is itself estimated from $\hat{\nu}$ and $\hat{\eta}^*$ (steps 2-3 in the recommended sequence, B.3). The estimation is therefore *sequential*, not simultaneous: estimate the gain and event rate first (from the agent's internal statistics and observation timing), then use these to extract $\rho$ from the mismatch trajectory. The gain and event rate are typically estimable independently of $\rho$ (they depend on the agent's own uncertainty and event timing, not on the environment's rate of change). This sequential structure avoids circularity but introduces sensitivity: errors in $\hat{\mathcal{T}}$ propagate linearly into $\hat{\rho}$.
+
 Local pause-window drift for TF-09:
 
 *[Operational Definition]*
@@ -101,138 +103,9 @@ This anchors TF-11's normalized persistence condition to real task outcomes.
 6. Estimate $\|\delta_{\text{critical}}\|$ from task-performance degradation.
 7. Compute derived diagnostics: tempo margin $\hat{\mathcal{T}} - \hat{\rho}/\|\hat{\delta}_{\text{critical}}\|$, reserve $\widehat{\Delta \rho^*} = \hat{\alpha}\hat{R} - \hat{\rho}$, and deliberation feasibility $\Delta\eta^*(\Delta\tau)\|\delta_{\text{post}}\| - \hat{\rho}_{\text{delib}}\Delta\tau$.
 
-## B.4 Compact End-to-End Worked Example (TF-01 -> Appendix A)
+## B.4 Minimal Reproducibility Checklist
 
-### System: 1D active tracking with selectable sensor mode
-
-The agent tracks scalar state $x_t$ and chooses sensor mode $a_t \in \{L, H\}$:
-
-- Dynamics: $x_{t+1} = x_t + v_t$, $v_t \sim \mathcal{N}(0, q)$, $q = 0.25$
-- Observation: $y_t = x_t + n_t^{(a_t)}$
-- Low mode noise: $r_L = 9$
-- High mode noise: $r_H = 1$
-- Event rate: $\nu = 5 \text{ Hz}$
-- High mode has higher energy cost
-
-This setup is minimal but includes both action-conditioned sensing and online model updating.
-
-### TF-01 (scope)
-
-- $\Omega_t = x_t$ is partially observed via noisy channel.
-- $\mathcal{A} = \{L, H\}$ is non-empty and causally affects observation quality.
-- Residual uncertainty persists ($H(\Omega_t \mid \mathcal{H}_t) > 0$) due to process and sensor noise.
-
-### TF-02 (causal structure + CIY)
-
-Action precedes observation and changes $P(y_t \mid do(a_t))$ through $r_{a_t}$.
-Using low mode as comparator action ($q(a') = \mathbf{1}[a' = L]$), the canonical TF-02 CIY is the interventional KL divergence:
-
-*[Worked Quantity]*
-$$\text{CIY}(H) = D_{\mathrm{KL}}\!\big(P(y \mid do(H)) \,\|\, P(y \mid do(L))\big)$$
-$$= \frac{1}{2}\left[\log\!\left(\frac{P^- + r_L}{P^- + r_H}\right) + \frac{P^- + r_H}{P^- + r_L} - 1\right]$$
-
-With $P^- = 4.25$, this gives:
-$$\text{CIY}(H) = \frac{1}{2}\left[\log\!\left(\frac{13.25}{5.25}\right) + \frac{5.25}{13.25} - 1\right] \approx 0.161 \text{ nats}$$
-
-### TF-03 (model)
-
-Model state $M_t = (\hat{x}_{t|t}, P_{t|t})$ is a compression of interaction history with recursive update.
-
-### TF-04 (event-driven dynamics)
-
-Each sensor read is an observation event; updates occur asynchronously at $\nu = 5 \text{ Hz}$.
-
-### TF-05 (mismatch)
-
-Innovation:
-
-*[Worked Quantity]*
-$$\delta_t = y_t - \hat{x}_{t|t-1}$$
-
-### TF-06 (update gain)
-
-Scalar Kalman gain:
-
-*[Worked Quantity]*
-$$K_t = \frac{P^-_t}{P^-_t + r_{a_t}}$$
-
-With $P^- = 4.25$:
-
-- $K(H) = 4.25 / 5.25 \approx 0.810$
-- $K(L) = 4.25 / 13.25 \approx 0.321$
-
-Exact TF-06 uncertainty ratio mapping:
-- $U_M = P^-_t$
-- $U_o = r_{a_t}$
-- $\eta^* = K_t$
-
-### TF-07 and TF-08 (action selection + exploration)
-
-Use policy objective:
-
-*[Worked Objective]*
-$$a_t^* = \arg\max_a \left[\mathbb{E}[\text{value}(a)\mid M_t] + \lambda_t \, \mathbb{E}[\text{CIY}(a)\mid M_t]\right]$$
-
-When uncertainty is high ($P^-$ large), $\lambda_t$ and the CIY term favor high mode $H$.
-As uncertainty falls, policy shifts toward low-cost $L$.
-
-### TF-09 (deliberation threshold)
-
-Suppose a planning pause of $\Delta\tau = 0.5 \text{ s}$, with measured local pause drift:
-
-*[Measured]*
-$$\rho_{\text{delib}} = 0.40 \;\text{surprise/s}$$
-
-Cost during pause: $\rho_{\text{delib}} \cdot \Delta\tau = 0.20$ surprise units.
-If $\|\delta_{\text{post}}\| = 0.70$, deliberation is worthwhile iff:
-
-*[Threshold]*
-$$\Delta\eta^*(0.5)\cdot 0.70 > 0.20 \;\Longrightarrow\; \Delta\eta^*(0.5) > 0.286$$
-
-If expected gain improvement is below $0.286$, act immediately.
-
-### TF-10 (structural adaptation trigger)
-
-Assume maneuvering regime change introduces sustained residual autocorrelation and mismatch floor.
-If estimated valid radius drops to $R = 0.08$ while current bound radius is $R^* = \rho/\alpha = 0.12$, parametric adaptation is no longer adequate ($R^* > R$), triggering model-class change (for example constant-velocity -> constant-acceleration process model).
-
-### TF-11 (tempo + persistence)
-
-Using action mix $70\% H, 30\% L$:
-
-*[Worked Quantity]*
-$$\bar{\eta}^* = 0.7(0.810) + 0.3(0.321) = 0.663$$
-*[Worked Quantity]*
-$$\mathcal{T} = \nu \bar{\eta}^* = 5 \cdot 0.663 = 3.315 \;\text{s}^{-1}$$
-
-With $\rho = 0.18 \text{ surprise/s}$ and $\|\delta_{\text{critical}}\| = 1$, persistence condition holds:
-
-*[Check]*
-$$\mathcal{T} > \frac{\rho}{\|\delta_{\text{critical}}\|} \;\;\Rightarrow\;\; 3.315 > 0.18$$
-
-### Appendix A (Lyapunov robustness mapping)
-
-From data, suppose conservative estimates:
-
-- $\alpha = 2.6 \text{ s}^{-1}$
-- $R = 1.4$
-- $\rho = 0.18$
-
-Then:
-
-*[Worked Bounds]*
-$$R^* = \frac{\rho}{\alpha} = \frac{0.18}{2.6} \approx 0.069 < R$$
-*[Worked Reserve]*
-$$\Delta\rho^* = \alpha R - \rho = 2.6(1.4) - 0.18 = 3.46$$
-
-Interpretation:
-
-- The agent is comfortably within its invariant region.
-- It has substantial adaptive reserve to absorb additional disturbance before structural failure.
-
-This completes one explicit path from TF-01 through Appendix A with measurable quantities at each step.
-
-## B.5 Minimal Reproducibility Checklist
+End-to-end worked examples demonstrating the full TFT chain are provided in [Appendix C](Appendix-C-Kalman-Example.md) (Kalman/linear-Gaussian domain, exact mapping) and [Appendix D](Appendix-D-RL-Example.md) (nonstationary bandit/RL domain, approximate mapping).
 
 For any domain report claiming TFT validation, include:
 
@@ -243,3 +116,22 @@ For any domain report claiming TFT validation, include:
 5. Task-level definition of $\|\delta_{\text{critical}}\|$.
 6. At least one ablation where $\eta$ is intentionally miscalibrated to test TF-06 predictions.
 7. At least one induced-shock test to evaluate reserve prediction $\Delta\rho^*$.
+
+## B.5 Estimator Uncertainty and Sample-Size Guidance
+
+The estimators in B.2 are point recipes. This section provides guidance on their reliability.
+
+**$\hat{\eta}^*$ (gain estimate).** Inherits uncertainty from $\hat{U}_M$ and $\hat{U}_o$. The ratio $U_M/(U_M + U_o)$ is most sensitive when $U_M \approx U_o$ (both contribute equally). Approximate variance via the delta method:
+
+*[Operational Guidance]*
+$$\text{Var}(\hat{\eta}^*) \approx \hat{\eta}^{*2}(1-\hat{\eta}^*)^2 \left[\frac{\text{Var}(\hat{U}_M)}{\hat{U}_M^2} + \frac{\text{Var}(\hat{U}_o)}{\hat{U}_o^2}\right]$$
+
+When $\hat{\eta}^*$ is near 0 or 1, the estimate is stable (dominated by one uncertainty source). Near 0.5, both sources matter and the estimate is most volatile.
+
+**$\hat{\rho}$ (mismatch injection rate).** Finite-difference estimation amplifies noise. Recommend smoothing the mismatch time series (exponential moving average or local regression) before differencing. Minimum sample guidance: ~20 mismatch observations for a stable trend estimate; ~50 for reliable variance characterization. The $[\cdot]_+$ clipping in the estimator removes negative estimates but introduces positive bias at small $\rho$; report the pre-clipped distribution if possible.
+
+**$\hat{\alpha}$ (sector lower bound).** The conservative lower-quantile approach (B.2.3) inherently accounts for estimation noise. The 10th-percentile choice gives approximately 90% confidence that the true $\alpha$ exceeds the estimate, under stationarity. Precision scales as $\sim 1/\sqrt{N}$ where $N$ is the number of bins. Report the quantile level, bin count, and bin width alongside $\hat{\alpha}$.
+
+**$\hat{R}$ (sector-condition radius).** The violation-tolerance criterion (B.2.4) is inherently conservative. Report the tolerance $\epsilon$, the sample size per bin, and the number of bins with violations. A sharp drop-off in sector-condition satisfaction at some radius is a strong signal; a gradual decay is less informative and suggests the sector condition may not hold cleanly.
+
+**General nonstationarity caveat.** All estimators assume approximate stationarity over the estimation window. If the environment is changing during estimation, the estimates characterize the *average* dynamics over that window, not instantaneous values. Use sliding windows matched to the expected stationarity timescale. When environment regime changes are suspected (TF-10), re-estimate from post-change data only.
