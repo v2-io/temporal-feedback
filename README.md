@@ -65,7 +65,7 @@ From these, the remaining results follow:
 
 ## What's Potentially Missing
 
-**A unified mathematical expression.** The claim that $\eta^* = U_M/(U_M + U_o)$ is the universal form of optimal updating is validated exactly for Kalman and Bayesian cases, approximately for RL, and loosely for PID. Whether a single equation can genuinely unify these — or whether the structural analogy is the real content and formal unification is a mirage — is the deepest open mathematical question. Confidence in genuine partial unification: ~60-65%. Full unification under one equation: ~30%.
+**A unified mathematical expression.** The claim that $\eta^* = U_M/(U_M + U_o)$ is the universal form of optimal updating is validated exactly for Kalman and Bayesian cases, approximately for RL, and loosely for PID. Whether a single equation can genuinely unify these — or whether the structural analogy is the real content and formal unification is a mirage — is one of the deeper open mathematical question incidental to this work. Confidence in genuine partial unification: ~60-65%. Full unification under one equation: ~30%.
 
 **Treatment of continuous interiority / temporal continuity.** The event-driven formulation (TF-03) allows for model evolution *between* events ("between events, the model state may evolve autonomously"). This sentence is doing enormous work that isn't unpacked. For LLM architecture specifically, the question of whether the model should be *continuously* active (persistent orientation as default mode, with message-emission as deliberate action) vs. event-triggered (the current chat paradigm) is a critical design question with implications for consciousness, agency, and temporal awareness. See the v7 dialogue and the planned LLM strategy document (#2).
 
@@ -73,7 +73,7 @@ From these, the remaining results follow:
 
 **Game theory of communication.** TF-06 introduces adversarial query dynamics (deception as negative effective CIY, active OODA loop interference via the information channel) but explicitly notes that the game-theoretic question — *when* is honest communication incentive-compatible? — is one TFT makes formally precise but does not answer. The literature on cheap talk, signaling games, and mechanism design addresses this. Integrating even basic results (e.g., conditions under which communication is credible) would strengthen the adversarial treatment and connect TFT to a mature formal discipline.
 
-**The relationship to thermodynamics / entropy.** Boyd's original theory appealed to the second law. The Free Energy Principle claims thermodynamic grounding. Our theory currently grounds in information theory (sufficient statistics, information bottleneck) rather than thermodynamics. Whether there's a genuine connection (beyond analogy) to thermodynamic entropy and dissipative structures is unresolved. We are deliberately *not* assuming this connection, but it may emerge.
+**The relationship to thermodynamics / entropy.** Boyd's original theory appealed to the second law. The Free Energy Principle claims thermodynamic grounding. Our theory currently grounds in information theory (sufficient statistics, information bottleneck) rather than thermodynamics. Whether there's a genuine connection (beyond analogy) to thermodynamic entropy and dissipative structures is unresolved. We are deliberately *not* assuming this connection, but it or its absence in these open systems may emerge.
 
 ## Source Material
 
