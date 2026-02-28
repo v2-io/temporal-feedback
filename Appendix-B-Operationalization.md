@@ -132,3 +132,38 @@ When $\hat{\eta}^*$ is near 0 or 1, the estimate is stable (dominated by one unc
 **$\hat{R}$ (sector-condition radius).** The violation-tolerance criterion (B.2.4) is inherently conservative. Report the tolerance $\epsilon$, the sample size per bin, and the number of bins with violations. A sharp drop-off in sector-condition satisfaction at some radius is a strong signal; a gradual decay is less informative and suggests the sector condition may not hold cleanly.
 
 **General nonstationarity caveat.** All estimators assume approximate stationarity over the estimation window. If the environment is changing during estimation, the estimates characterize the *average* dynamics over that window, not instantaneous values. Use sliding windows matched to the expected stationarity timescale. When environment regime changes are suspected (TF-10), re-estimate from post-change data only.
+
+## B.6 Decision-Theoretic Procedures
+
+The estimators above support three operational decision procedures.
+
+### B.6.1 Estimating $\lambda$ (Exploration Price)
+
+The exploration weight $\lambda(M_t)$ in TF-08's unified policy objective prices information in value-equivalent terms. In domains with sufficient structure, $\lambda$ is derivable:
+
+| Context | $\lambda$ estimator | Source |
+|---------|--------------------|--------|
+| Finite bandits | Gittins index from dynamic programming | Exact (Gittins 1979) |
+| Linear-Gaussian | Probing cost in quadratic objective | Exact (dual control) |
+| Discrete MDP | $(\text{VoI})^2 / \text{info gain}$ | Information-directed sampling (Russo & Van Roy) |
+| General | $\hat{\lambda} = c \cdot \hat{U}_M / \hat{U}_o$ | Heuristic: scale CIY weight by relative uncertainty |
+
+For the heuristic: when $U_M \gg U_o$ (highly uncertain model), exploration is cheap relative to exploitation risk, so $\lambda$ should be large. When $U_M \ll U_o$ (confident model, noisy observations), exploitation dominates. The constant $c$ is domain-specific and should be calibrated by held-out performance.
+
+### B.6.2 Deliberation Stopping Policy
+
+From Proposition 9.1 (TF-09), deliberation of duration $\Delta\tau$ is warranted when $\Delta\eta^*(\Delta\tau) \cdot \|\delta_{\text{post}}\| > \rho_{\text{delib}} \cdot \Delta\tau$. Operationally:
+
+1. Estimate $\rho_{\text{delib}}$ from prior pause windows (B.2.2).
+2. Before each deliberation episode, estimate $\|\delta_{\text{post}}\|$ as current mismatch + $\rho_{\text{delib}} \cdot \Delta\tau_{\text{planned}}$.
+3. Estimate $\Delta\eta^*(\Delta\tau)$ from the diminishing-returns profile of past deliberation episodes (or from the marginal improvement of the first few candidate actions evaluated).
+4. Stop deliberating when the marginal improvement rate $\partial \Delta\eta^* / \partial \Delta\tau$ drops below $\rho_{\text{delib}} / \|\delta_{\text{post}}\|$ (the first-order optimality condition from TF-09).
+
+### B.6.3 Structural-Switch Trigger
+
+From Proposition 10.1 (TF-10), structural adaptation is indicated when parametric convergence leaves a mismatch floor. Operationally, the switching decision balances expected mismatch reduction against transition cost:
+
+1. Estimate the current mismatch floor $\|\delta\|_{\text{floor}}$ from the converged residual statistics.
+2. Estimate the post-switch expected mismatch as $\|\delta\|_{\text{new}} \approx \rho / \alpha'$ where $\alpha'$ is the sector bound under the candidate new model class (may need pilot estimation).
+3. Estimate transition cost $C_{\text{switch}}$: knowledge loss (parameters that don't transfer), retraining time ($\Delta\tau_{\text{switch}}$), and accumulated mismatch during transition ($\rho \cdot \Delta\tau_{\text{switch}}$).
+4. Switch when: $(\|\delta\|_{\text{floor}} - \|\delta\|_{\text{new}}) \cdot T_{\text{horizon}} > C_{\text{switch}}$, where $T_{\text{horizon}}$ is the expected time the new model class will remain adequate.
