@@ -19,10 +19,11 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 | [TF-06](TF-06.md) | The Update Gain | Derived + Empirical Claim | Draft |
 | [TF-07](TF-07.md) | Action Selection | Derived + Discussion | Draft |
 | [TF-08](TF-08.md) | The Exploration-Exploitation Balance | Hypothesis + Discussion | Draft |
-| [TF-09](TF-09.md) | The Cost of Deliberation | Derived (conditional on TF-11) | Draft |
+| [TF-09](TF-09.md) | The Cost of Deliberation | Derived (conditional on local Assumption 9.0) | Draft |
 | [TF-10](TF-10.md) | Structural Adaptation | Derived + Empirical | Draft |
 | [TF-11](TF-11.md) | Temporal Nesting and Adaptive Tempo | Derived + Hypothesis | Draft |
 | [Appendix A](Appendix-A-Lyapunov.md) | Lyapunov Stability Analysis | Derived (from sector-condition assumptions) | Draft |
+| [Appendix B](Appendix-B-Operationalization.md) | Operationalization and Worked Example | Procedures + Worked Example | Draft |
 
 ## Epistemic Status Legend
 
@@ -48,7 +49,7 @@ From these, the remaining results follow:
 - The **mismatch signal** (TF-05) exists as a consequence of having a predictive model in an uncertain world. TF-02 adds that this signal, when conditioned on the agent's action, carries *interventional* (causal) information.
 - The **update gain** (TF-06) balances model uncertainty against observation uncertainty, with the Kalman gain, Bayesian posterior weight, and RL learning rate as special cases of a common form.
 - **Action selection** (TF-07) is a function of the model, with a spectrum from implicit action (high *action fluency* — the degree to which effective action flows from the model without deliberation) to explicit deliberation. Selective pressure favors internalizing frequently-needed patterns, but deliberation remains essential for novel situations, large action spaces, and high-stakes decisions. Actions generate information (CIY, TF-02), and **query actions** — accessing another agent's pre-compressed model — can yield orders-of-magnitude higher CIY than direct environment probing, which is why rational agents preferentially consult reliable external models when available. CIY-dependent policy terms assume interventional identifiability conditions (Regime A directly, Regime B with explicit causal assumptions).
-- **The cost of deliberation** (TF-09) formalizes the trade-off between action quality and timeliness: deliberation is justified iff the gain in update quality exceeds the mismatch accumulated during the deliberation period. This derives Boyd's insight about over-deliberation in high-tempo environments.
+- **The cost of deliberation** (TF-09) formalizes the trade-off between action quality and timeliness: deliberation is justified iff the gain in update quality exceeds the mismatch accumulated during the deliberation period. The derivation is conditional on a local pause-window drift assumption (Assumption 9.0), with TF-11 providing a compatible global dynamics model.
 - **Structural adaptation** (TF-10) — changing the model class, not just its parameters — becomes necessary when the model class itself is inadequate (Proposition 10.1). Parametric and structural adaptation are the most commonly analyzed ends of a *continuum* of adaptive timescales; real systems may operate at multiple intermediate levels simultaneously. Mechanisms of structural change range from expansion and grafting to full decomposition-and-recombination. The opposite failure mode, structural *overfitting*, is also addressed.
 - **Temporal nesting** (TF-11) and the concept of **adaptive tempo** ($\mathcal{T} = \sum_k \nu^{(k)} \cdot \eta^{(k)*}$) yield the persistence threshold (Proposition 11.1) and formalize adversarial advantage. In the linear coupled model, adversarial mismatch scaling is a first-order heuristic; **Appendix A** provides the stronger reserve-threshold instability criterion via Lyapunov analysis, proving persistence and adversarial destabilization under general nonlinear correction dynamics (not just the linear hypothesis), and introducing the concept of *adaptive reserve* — an agent's shock tolerance.
 
@@ -62,7 +63,7 @@ From these, the remaining results follow:
 
 **Scope boundaries document.** The v7 source material had a section on where the OODA pattern breaks down (pure math, self-organizing systems, aesthetics). This should be carried forward, possibly as an appendix or a specific TF on boundaries.
 
-**A formal domain instantiation appendix.** The individual TFs contain domain mapping tables. A consolidated appendix showing the complete mapping for each domain (Kalman, RL, PID, Bayesian, Boyd, PDCA, immune, organizational) would be valuable.
+**A formal domain instantiation appendix.** [Appendix B](Appendix-B-Operationalization.md) now provides an initial operationalization framework and one end-to-end worked example. A fuller consolidated mapping across all domains (Kalman, RL, PID, Bayesian, Boyd, PDCA, immune, organizational) is still pending.
 
 ## What's Potentially Missing
 
