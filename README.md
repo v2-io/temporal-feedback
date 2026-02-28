@@ -13,13 +13,14 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 | [TF-00](TF-00.md) | Notation and Conventions | Reference | Draft |
 | [TF-01](TF-01.md) | Scope — Adaptive Agents Under Uncertainty | Scope Definition | Draft |
 | [TF-02](TF-02.md) | Causal Structure | Axiom | Draft |
-| [TF-03](TF-03.md) | The Model | Axiom | Draft |
+| [TF-03](TF-03.md) | The Model | Formulation | Draft |
 | [TF-04](TF-04.md) | Event-Driven Dynamics | Formulation | Draft — placement & formulation under review |
 | [TF-05](TF-05.md) | The Mismatch Signal | Derived | Draft |
 | [TF-06](TF-06.md) | The Update Gain | Derived + Empirical Claim | Draft |
 | [TF-07](TF-07.md) | Action Selection | Derived + Discussion | Draft |
 | [TF-08](TF-08.md) | The Exploration-Exploitation Balance | Hypothesis + Discussion | Draft |
-| [TF-09](TF-09.md) | The Cost of Deliberation | Derived | Draft |
+
+| [TF-09](TF-09.md) | The Cost of Deliberation | Derived (conditional on TF-11) | Draft |
 | [TF-10](TF-10.md) | Structural Adaptation | Derived + Empirical | Draft |
 | [TF-11](TF-11.md) | Temporal Nesting and Adaptive Tempo | Derived + Hypothesis | Draft |
 | [Appendix A](Appendix-A-Lyapunov.md) | Lyapunov Stability Analysis | Derived (from sector-condition assumptions) | Draft |
@@ -37,11 +38,11 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 
 ## The Core Structure
 
-The theory builds from a scope definition and two axioms:
+The theory builds from a scope definition, one axiom, and one formulation:
 
 1. **TF-01** defines the scope: agents coupled to environments through observation and action under residual uncertainty.
 2. **TF-02** establishes the **causal structure**: the irreversible temporal ordering of events is constitutive of the feedback loop. Causality here is grounded in temporal ordering (the most primitive notion) rather than statistical influence — the causal structure holds even when the agent's actions have minimal or nominal effect on the environment. This axiom grounds Pearl's causal hierarchy (associational → interventional → counterfactual) as three levels of epistemic access available within the loop, and establishes that an agent's interaction history is a singular, non-forkable causal trajectory.
-3. **TF-03** establishes that any persisting agent necessarily maintains a **model** — a compression of its interaction history that functions as a sufficient statistic for prediction and action.
+3. **TF-03** formulates the analytical framework: any persisting agent is analyzed as maintaining a **model** — a compression of its interaction history that functions as a sufficient statistic for prediction and action. This is a representational definition (not a psychological claim) that becomes productive when the formal apparatus (sufficiency, information bottleneck, model class fitness) can be meaningfully applied.
 
 From these, the remaining results follow:
 
@@ -72,7 +73,7 @@ From these, the remaining results follow:
 
 **Multi-agent and distributed model theory.** The current theory treats a single agent. Organizational learning, swarm intelligence, and multi-agent systems involve distributed models with coordination costs. The adversarial two-agent case in TF-11 is a start but doesn't address cooperative distributed adaptation.
 
-**Game theory of communication.** TF-07 introduces adversarial query dynamics (deception as negative effective CIY, active OODA loop interference via the information channel) but explicitly notes that the game-theoretic question — *when* is honest communication incentive-compatible? — is one TFT makes formally precise but does not answer. The literature on cheap talk, signaling games, and mechanism design addresses this. Integrating even basic results (e.g., conditions under which communication is credible) would strengthen the adversarial treatment and connect TFT to a mature formal discipline.
+**Game theory of communication.** TF-08 introduces adversarial query dynamics (deception as adversarial disturbance injection, active OODA loop interference via the information channel) but explicitly notes that the game-theoretic question — *when* is honest communication incentive-compatible? — is one TFT makes formally precise but does not answer. The literature on cheap talk, signaling games, and mechanism design addresses this. Integrating even basic results (e.g., conditions under which communication is credible) would strengthen the adversarial treatment and connect TFT to a mature formal discipline.
 
 **The relationship to thermodynamics / entropy.** Boyd's original theory appealed to the second law. The Free Energy Principle claims thermodynamic grounding. Our theory currently grounds in information theory (sufficient statistics, information bottleneck) rather than thermodynamics. Whether there's a genuine connection (beyond analogy) to thermodynamic entropy and dissipative structures is unresolved. We are deliberately *not* assuming this connection, but it or its absence in these open systems may emerge.
 

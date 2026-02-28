@@ -692,3 +692,20 @@ a new TF or part of the LLM strategy document.
     - Eliminated awkward 01b and 06.5 suffixes
     - 11 numbered docs + 1 appendix (matches TST's 12)
     - Line counts now 42-265 (mean ~76 excl. appendix, down from ~113)
+
+## Session 8: Synthesized Feedback Implementation (items 51+)
+
+51. **Triple-reviewer feedback synthesis and implementation.** Received and synthesized feedback from Codex (scratch/tft-feedback-2026-02-28.md), Gemini (scratch/10-comprehensive-feedback-review.md), and fresh Opus (scratch/11-opus-deep-review-2026-02-27.md). Implemented 12 edits:
+    - TF-03: Axiom → Formulation (Opus primary concern, Codex implicit)
+    - TF-02: Added formal CIY Admissibility Regimes box (three regimes: randomized, observational, adversarial) — resolves triple-convergent "negative CIY" issue
+    - TF-08: Rewrote adversarial mirror from "negative effective CIY" to ρ-injection framing via Lyapunov γ_A
+    - TF-08: Added CIY estimability note to unified policy objective
+    - TF-08: Heading → "Hypothesis + Discussion"
+    - TF-05: Proof wording: "independence" → orthogonality via tower property
+    - TF-05: Added δ units/interpretation bridge note for TF-11 dynamics
+    - TF-07: Added formal characterization of action fluency (Δη* ≈ 0 ⟹ high fluency)
+    - TF-09: Marked conditional on TF-11 hypothesis; added ρ forward reference
+    - TF-11: Added prominent opening note distinguishing ODE-dependent quantitative vs robust qualitative results
+    - TF-00: Fixed policy objective location (→ TF-08), λ location, Prop 9.1 status, CIY entry, action fluency entry, dependency labels
+    - README: Updated TF-03 type, core structure description, TF-09 status, adversarial reference
+    Deferred for discussion: uncertainty ratio reframing (TF-06), "tautological axioms" caveat (TF-00/TF-02), TF-01 vs TF-02 ordering

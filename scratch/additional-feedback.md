@@ -36,11 +36,11 @@ All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), earli
 - Fix: Replace with H(Omega_t | H_t) > 0 where H_t explicitly contains the action-observation sequence, or equivalently H(Omega_t | o_{1:t}, a_{1:t-1}) > 0. Keeps TF-01 aligned with TF-02/TF-04/TF-06.
 - Severity: High — foundational scope definition should match the rest of the framework.
 
-**A7. CIY sign semantics reconciliation** ~~DONE (Session 6)~~ (scratch/08-full-read #3)
-- TF-00 types CIY as >= 0; TF-01b notes the MI-difference form can be negative in general; TF-06 discusses "negative effective CIY" for deception.
-- This is partially tracked (CIY non-negativity was noted as assumption in TF-01b), but the three documents are not yet fully consistent.
-- scratch/08-full-read proposes: split into CIY_raw(a) (formal MI difference, can be negative) and CIY_eff(a) (operationally clipped/calibrated value used in policy). Or: explicitly constrain CIY definition to identifiable interventional settings where non-negativity holds.
-- Fix: Choose one approach and propagate consistently through TF-00, TF-01b, and TF-06.
+**A7. CIY sign semantics reconciliation** ~~DONE (Session 6)~~ ~~REOPENED & RESOLVED (Session 8)~~ (scratch/08-full-read #3, Codex/Gemini/Opus Session 8 feedback)
+- TF-02 now has a formal "CIY Admissibility Regimes" box with three regimes: (A) randomized interventions (CIY non-negative by construction), (B) observational with causal assumptions (conditionally estimable), (C) adversarial communication (CIY remains non-negative; adversarial effect operates through ρ-injection, not negative CIY).
+- TF-08's adversarial mirror section rewritten: "negative effective CIY" replaced with "adversarial disturbance injection" framing, connecting to Appendix A's γ_A coupling.
+- TF-00's CIY entry updated to reference adversarial exploitation rather than "negative effective CIY."
+- TF-08's unified policy objective now has a CIY estimability note clarifying when the exploration term is meaningful.
 
 **A8. TF-08 adversarial ratio coupling assumptions** ~~DONE (Session 6)~~ (scratch/08-full-read #4)
 - The adversarial mismatch ratio is stated purely in tempos, but requires symmetry/normalization assumptions on the coupling that aren't displayed.
@@ -162,6 +162,27 @@ These are not gaps in the current theory but directions worth considering. Inclu
 **E3. Deliverable #2: LLM training strategy** (scratch/00)
 - Not yet started. This is the practical application document grounding TFT in LLM design.
 - Should be informed by the continuous interiority discussion (D1), reward-as-value-channel (D2), and the non-forkability result from TF-01b.
+
+---
+
+## Session 8 Resolved Items (2026-02-28)
+
+New feedback from Codex (scratch/tft-feedback-2026-02-28.md), Gemini (scratch/10-comprehensive-feedback-review.md), and fresh Opus (scratch/11-opus-deep-review-2026-02-27.md) was synthesized and the following were implemented:
+
+- TF-00: policy objective reference corrected to TF-08; λ(M_t) moved to TF-08 section; Prop 9.1 marked conditional on TF-11; CIY entry updated; action fluency characterized via deliberation gain
+- TF-02: "Note on non-negativity" replaced with formal "CIY Admissibility Regimes" box (three regimes: randomized, observational, adversarial)
+- TF-03: Relabeled from "Axiom" to "Formulation"; "Why This Is an Axiom" rewritten as "Why This Is a Formulation" with honest framing about modeling choices
+- TF-05: Proof wording changed from "independence" to orthogonality via tower property; added note on δ units/interpretation bridging to TF-11
+- TF-07: Added formal characterization of action fluency via deliberation gain (Δη* ≈ 0 ⟹ high fluency)
+- TF-08: Heading updated to "Hypothesis + Discussion"; CIY estimability note added to unified policy objective; adversarial mirror "negative effective CIY" replaced with ρ-injection framing
+- TF-09: Epistemic status updated to "Derived, conditional on TF-11's mismatch dynamics hypothesis" with forward reference for ρ
+- TF-11: Added prominent opening note distinguishing hypothesis-dependent quantitative results from robust qualitative ones; shorthand declaration for normalized threshold notation
+- README: TF-03 type updated; core structure description updated; TF-09 marked conditional; adversarial reference updated
+
+**Still deferred for discussion:**
+- Uncertainty ratio principle reframing in TF-06 (Opus concern — ~65% worth doing)
+- "Tautological axioms" caveat in TF-00 re: TF-02 (Opus concern — ~70% worth doing)
+- TF-01 vs TF-02 ordering question (Gemini concern — structural, defer)
 
 ---
 
