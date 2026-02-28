@@ -201,7 +201,7 @@ $$\mathcal{T}_B > \frac{\Delta\rho^*_A}{\gamma_B}$$
 
 The adversarial outcome depends on whether either agent can push the other past its stability limit. $\square$
 
-**Interpretation.** "Getting inside the opponent's OODA loop" has a precise Lyapunov characterization: Agent $A$ destabilizes Agent $B$ when $A$'s tempo, multiplied by coupling effectiveness, exceeds $B$'s adaptive reserve $\Delta\rho^*_B$. This is richer than TF-11's linear steady-state coupled scaling law (under coupling-dominant disturbance, $|\delta_B|/|\delta_A| \approx (\gamma_A/\gamma_B)(\mathcal{T}_A/\mathcal{T}_B)^2$) because it captures:
+**Interpretation.** "Getting inside the opponent's OODA loop" has a precise Lyapunov characterization: Agent $A$ destabilizes Agent $B$ when $A$'s tempo, multiplied by coupling effectiveness, exceeds $B$'s adaptive reserve $\Delta\rho^*_B$. This is richer than TF-11's linear steady-state coupled scaling law (under coupling-dominant disturbance, $\|\delta_B\|/\|\delta_A\| \approx (\gamma_A/\gamma_B)(\mathcal{T}_A/\mathcal{T}_B)^2$) because it captures:
 
 - **Asymmetric coupling** ($\gamma_A \neq \gamma_B$): an agent with lower tempo but higher coupling effectiveness can still win.
 - **Finite reserves**: an agent with very high $\mathcal{T}$ but operating near its model-class limit ($\Delta\rho^*$ small) is vulnerable despite high tempo.
