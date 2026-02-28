@@ -416,6 +416,176 @@ Changes made:
     quantitative steady states, convergence rates, optimal gain structure,
     explore-exploit balance, model sufficiency, causal structure.
 
+### Session 3e: Lyapunov Appendix Promotion
+
+15. **Appendix-A-Lyapunov.md** created in project root. Polished versions of
+    L.1–L.3.1 as Propositions A.1–A.3 + Corollary A.3.1, with full proofs,
+    interpretations, domain instance tables, and summary matrix. L.4 included
+    as explicit sketch with notes on what's missing (structural adaptation
+    dynamics G). Added "What this illuminates" and "What this does NOT
+    illuminate" sections for honest scoping.
+
+16. **TF-08 references**: Three insertion points added:
+    - Prop 8.1 robustness note → forward reference to A.1
+    - Open Question #1 (nonlinear dynamics) → forward reference to full
+      appendix, noting adaptive reserve and adversarial results
+    - Adversarial dynamics section → forward reference to A.3 and A.3.1
+
+17. **README updated**: Appendix A added to table of contents. Core structure
+    summary updated to mention Lyapunov extension and adaptive reserve concept.
+
+### Session 4: Prescriptiveness Audit and Multi-Timescale Fix
+
+18. **Identified systemic prescriptiveness issue.** The theory had drifted
+    into treating "parametric" vs "structural" as a clean binary when TF-08
+    already describes N levels. The binary was leaking into TF-07 ("The Two
+    Levels"), Appendix A.4 (two-state singular perturbation), and various
+    modal language throughout.
+
+19. **TF-06: Action fluency concept introduced.** Replaced the category error
+    "in the limit of a perfect model, all action is implicit" with a proper
+    distinction between model sufficiency S(M_t) and *action fluency* — the
+    degree to which effective action flows from the model without deliberation.
+    Chess grandmaster has high S but needs search; a reflex has moderate S but
+    high fluency in its domain. Unifies reflexes, muscle memory, instincts,
+    intuition, expertise, System 1 under a single concept without reducing
+    them to "cached policy." Connected implicit action to TST T-01 temporal
+    optimality principle and TF-06.5's deliberation cost derivation.
+
+20. **TF-07: Reframed as multi-timescale continuum.** "The Two Levels" →
+    "Levels of Adaptation" with parametric/structural as commonly analyzed
+    ends of a continuum. "Requires destruction" → decompose-and-recombine
+    as one mechanism among several (expansion, compression, grafting).
+    Boyd's snowmobile thought experiment preserved as motivating example.
+    Added "Notes on intermediate levels" column to domain instantiation table.
+    Destruction-Creation Cycle reframed as "A Common Pattern" that applies
+    when structural change involves significant decomposition.
+
+21. **TF-08: Nesting table noted as illustrative, not exhaustive.**
+
+22. **Appendix A.4: Rewritten for N timescales.** General $N$-level singular
+    perturbation framework with two-timescale as simplest nontrivial case.
+    Added LLM applicability note. Summary table updated.
+
+23. **Modal language pass across all documents.** Fixed:
+    - TF-04: "active testing is essential" → "can be valuable for agents
+      that have the capacity to vary their actions"
+    - TF-06.5: "well-trained systems default to implicit action" → "high-
+      tempo environments favor implicit action"
+    - README: Updated TF-06 and TF-07 summaries.
+
+24. **TF-00: Updated.** Added action fluency concept. Added Lyapunov notation
+    block (α, R, R*, Δρ*, γ_A, V, F, w).
+
+### Session 4b: Query Actions
+
+25. **TF-06: Query actions section added** under "Action as Information
+    Generation." Identified that the theory's examples of exploration were
+    almost exclusively about direct environment probing, missing the
+    qualitatively different class of actions where information comes from
+    querying another agent's pre-compressed model. Key properties:
+    - Extreme CIY density (orders of magnitude higher than individual probes)
+    - Trust-dependent gain (second-order model of source reliability)
+    - Pre-compressed information (transfer of sufficient statistics, with
+      translation cost when representational frameworks differ)
+    - Can trigger structural adaptation via grafting (TF-07)
+
+    Motivated by the Bohr/barometer thought experiment: when a reliable
+    external model exists, querying it dominates physical probing.
+
+26. **TF-06 domain table expanded** with "Exploration: query actions" column.
+    Every domain has query-action analogs (intelligence gathering, literature
+    review, hiring consultants, social learning, etc.).
+
+27. **Cross-references added:**
+    - TF-01b: Note that CIY framework encompasses query actions; query
+      response is causally downstream of query action.
+    - TF-04: Query actions as efficient way to resolve zero-mismatch ambiguity.
+    - TF-07: Grafting mechanism explicitly linked to query actions as
+      primary conduit for acquiring external representational structure.
+    - README: Summary updated.
+
+    Connects forward to LLM strategy document: LLMs are fundamentally
+    query-answering agents whose value is providing high-CIY responses
+    from a massive pre-compressed model.
+
+### Session 4c: Counterfactual Deliberation and Adversarial Communication
+
+28. **TF-06: Deliberation as counterfactual simulation.** Added paragraph after
+    explicit deliberation bullet list connecting deliberation to Pearl's Level 3
+    epistemic access (TF-01b). Key insight: deliberation IS counterfactual
+    simulation — comparing predicted consequences of actions not yet taken by
+    running the model's causal structure forward under multiple hypothetical
+    interventions. The computational cost of this simulation is what distinguishes
+    deliberation from implicit action. When action fluency is high, the
+    counterfactual comparison has been "pre-computed" through prior experience.
+
+29. **TF-06: Adversarial mirror of query actions.** Added subsection "The
+    Adversarial Mirror: Deception and Model Corruption" after the cooperative
+    query actions section. Four key points:
+    - Deception as negative effective CIY (updates that increase rather than
+      decrease model-reality mismatch)
+    - Boyd's active OODA loop interference formalized: adversary manipulates
+      information environment to increase opponent's ρ through the communicative
+      channel rather than physical action
+    - Trust meta-model as second-order attack surface (corrupting the capacity
+      to evaluate information, not just injecting bad information)
+    - Formal symmetry: same structure (communicative actions with trust-dependent
+      gain) encompasses both cooperative and adversarial cases; game theory's
+      cheap talk / signaling games address incentive compatibility
+
+30. **TF-08: Cross-reference added** from adversarial dynamics section to TF-06's
+    adversarial communication discussion, noting that coupling γ_A can operate
+    through communicative channels.
+
+### Session 5: Combined Audit (Claude + Codex + Gemini)
+
+31. **TF-06: Level 2/3 conflation fixed.** The deliberation paragraph originally
+    claimed deliberation is "in its essence, counterfactual simulation (Level 3)."
+    This overclaimed. Forward-looking comparison of candidate actions is iterated
+    Level 2 (mental intervention); Level 3 (counterfactual) is retrospective
+    ("what would have happened had I done otherwise?"). Fixed to distinguish.
+    Cross-reference added to TF-01b Level 3 section.
+
+32. **TF-08: Persistence threshold inconsistency fixed** (Codex #1). The linear
+    ODE yields bounded mismatch for any T > 0, not just T > rho. The old
+    statement conflated "bounded" with "functionally adequate." Rewritten to:
+    mismatch always bounded under linear dynamics, but functional persistence
+    requires T > rho/|delta_critical|. The shorthand T > rho is the normalized
+    form. Nonlinear/adversarial case is where unbounded growth actually occurs.
+
+33. **TF-00: Dimensional analysis fixed** (Codex #2). T has units [1/t], rho has
+    units [surprise/t] — these are NOT the same units. The comparison T > rho
+    only makes sense when mismatch is normalized to be dimensionless. Fixed
+    units section with explicit dimensional analysis.
+
+34. **Appendix A.4: Epsilon direction fixed** (Codex #4). The two-timescale case
+    had epsilon * x2_dot = G, making x2 FAST (not slow as labeled). Fixed to
+    x2_dot = epsilon * G.
+
+35. **F symbol collision resolved** (Codex medium #2, our C2). Renamed structural
+    update function from F to Phi in TF-07 and TF-00 to avoid collision with
+    Appendix A's correction function F(T, delta).
+
+36. **CIY non-negativity noted as assumption** (Codex #3). The definition
+    (difference of two MI terms) is not guaranteed non-negative in general.
+    Added note to TF-01b: non-negativity holds under randomized actions or
+    causal Markov condition; stated as assumption not proven property.
+
+37. **Language/attribution fixes across documents:**
+    - TF-06.5: "Boyd's central operational insight" → "a principle Boyd emphasized"
+    - TF-08: "asserted as doctrine" → "argued qualitatively"
+    - TF-08: removed unattributed quotation marks from "acting on a world..."
+    - TF-01b: "most fundamental" → "most primitive" for consistency
+    - TF-06: "often happens" → "Boyd's thought experiment specifically illustrates"
+    - TF-01: replaced "would be the environment" flourish with formal statement
+
+38. **TF-00 notation fixes:** H_t attribution corrected to TF-01b/TF-02;
+    nu_eff added to event-driven dynamics table with note on T identity.
+
+39. **README: Game theory gap noted** in "What's Potentially Missing" —
+    TFT makes incentive compatibility formally precise but doesn't answer it.
+
 ### Still Pending from Reviews
 
 - TF-03 track decision (minimal async vs. full stochastic process)
@@ -424,7 +594,7 @@ Changes made:
 - Citation confidence tiers for v7 references
 - Formal derivation of λ(M_t) from first principles (hard — may require
   Bayes-optimal decision theory or Gittins-like analysis)
-- Decision: promote L.1-L.3 into TF-08 or create dedicated appendix?
+- ~~Decision: promote L.1-L.3 into TF-08 or create dedicated appendix?~~ RESOLVED: dedicated Appendix A with forward references from TF-08.
 
 ### Notes on Evolution of TF-01
 

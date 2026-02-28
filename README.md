@@ -21,6 +21,7 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 | [TF-06.5](TF-06.5.md) | The Cost of Deliberation | Derived | Draft — will renumber when stable |
 | [TF-07](TF-07.md) | Structural Adaptation | Derived + Empirical | Draft |
 | [TF-08](TF-08.md) | Temporal Nesting and Adaptive Tempo | Derived + Hypothesis | Draft |
+| [Appendix A](Appendix-A-Lyapunov.md) | Lyapunov Stability Analysis | Derived (from sector-condition assumptions) | Draft |
 
 ## Epistemic Status Legend
 
@@ -45,10 +46,10 @@ From these, the remaining results follow:
 
 - The **mismatch signal** (TF-04) exists as a consequence of having a predictive model in an uncertain world. TF-01b adds that this signal, when conditioned on the agent's action, carries *interventional* (causal) information.
 - The **update gain** (TF-05) balances model uncertainty against observation uncertainty, with the Kalman gain, Bayesian posterior weight, and RL learning rate as special cases of a common form.
-- **Action selection** (TF-06) is a function of the model, with implicit/habitual action as the norm and deliberation as the fallback. The exploration-exploitation trade-off connects to maximizing causal information yield (TF-01b).
+- **Action selection** (TF-06) is a function of the model, with a spectrum from implicit action (high *action fluency* — the degree to which effective action flows from the model without deliberation) to explicit deliberation. Selective pressure favors internalizing frequently-needed patterns, but deliberation remains essential for novel situations, large action spaces, and high-stakes decisions. Actions generate information (CIY, TF-01b), and **query actions** — accessing another agent's pre-compressed model — can yield orders-of-magnitude higher CIY than direct environment probing, which is why rational agents preferentially consult reliable external models when available.
 - **The cost of deliberation** (TF-06.5) formalizes the trade-off between action quality and timeliness: deliberation is justified iff the gain in update quality exceeds the mismatch accumulated during the deliberation period. This derives Boyd's insight about over-deliberation in high-tempo environments.
-- **Structural adaptation** (TF-07) — changing the model class, not just its parameters — is necessary when the model class itself is inadequate (Proposition 7.1). The opposite failure mode, structural *overfitting*, is also addressed: when the model class is too expressive and memorizes noise.
-- **Temporal nesting** (TF-08) and the concept of **adaptive tempo** ($\mathcal{T} = \sum_k \nu^{(k)} \cdot \eta^{(k)*}$) yield the persistence threshold (Proposition 8.1) and formalize adversarial advantage.
+- **Structural adaptation** (TF-07) — changing the model class, not just its parameters — becomes necessary when the model class itself is inadequate (Proposition 7.1). Parametric and structural adaptation are the most commonly analyzed ends of a *continuum* of adaptive timescales; real systems may operate at multiple intermediate levels simultaneously. Mechanisms of structural change range from expansion and grafting to full decomposition-and-recombination. The opposite failure mode, structural *overfitting*, is also addressed.
+- **Temporal nesting** (TF-08) and the concept of **adaptive tempo** ($\mathcal{T} = \sum_k \nu^{(k)} \cdot \eta^{(k)*}$) yield the persistence threshold (Proposition 8.1) and formalize adversarial advantage. **Appendix A** extends these results via Lyapunov stability analysis, proving persistence and adversarial destabilization under general nonlinear correction dynamics (not just the linear hypothesis), and introducing the concept of *adaptive reserve* — an agent's shock tolerance.
 
 ## What's Probably Missing
 
@@ -69,6 +70,8 @@ From these, the remaining results follow:
 **Treatment of continuous interiority / temporal continuity.** The event-driven formulation (TF-03) allows for model evolution *between* events ("between events, the model state may evolve autonomously"). This sentence is doing enormous work that isn't unpacked. For LLM architecture specifically, the question of whether the model should be *continuously* active (persistent orientation as default mode, with message-emission as deliberate action) vs. event-triggered (the current chat paradigm) is a critical design question with implications for consciousness, agency, and temporal awareness. See the v7 dialogue and the planned LLM strategy document (#2).
 
 **Multi-agent and distributed model theory.** The current theory treats a single agent. Organizational learning, swarm intelligence, and multi-agent systems involve distributed models with coordination costs. The adversarial two-agent case in TF-08 is a start but doesn't address cooperative distributed adaptation.
+
+**Game theory of communication.** TF-06 introduces adversarial query dynamics (deception as negative effective CIY, active OODA loop interference via the information channel) but explicitly notes that the game-theoretic question — *when* is honest communication incentive-compatible? — is one TFT makes formally precise but does not answer. The literature on cheap talk, signaling games, and mechanism design addresses this. Integrating even basic results (e.g., conditions under which communication is credible) would strengthen the adversarial treatment and connect TFT to a mature formal discipline.
 
 **The relationship to thermodynamics / entropy.** Boyd's original theory appealed to the second law. The Free Energy Principle claims thermodynamic grounding. Our theory currently grounds in information theory (sufficient statistics, information bottleneck) rather than thermodynamics. Whether there's a genuine connection (beyond analogy) to thermodynamic entropy and dissipative structures is unresolved. We are deliberately *not* assuming this connection, but it may emerge.
 

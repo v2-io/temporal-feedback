@@ -20,7 +20,7 @@ We adopt the most primitive notion of causality: **event $A$ can be a cause of e
 
 **Counterfactual causality** (derived, requires model): Had $A$ been different, $B$ would have been different. This requires the agent to maintain a model capable of counterfactual reasoning — a Level 3 capability in Pearl's hierarchy.
 
-The temporal notion is the most fundamental because it survives even when statistical influence is negligible. An agent passively observing a system with minimal intervention still has a causal history — the temporal ordering of its observations and (minimal) actions still structures what it can learn and when. The feedback loop's power does not *require* strong environmental coupling, though it benefits from it.
+The temporal notion is the most primitive because it survives even when statistical influence is negligible. An agent passively observing a system with minimal intervention still has a causal history — the temporal ordering of its observations and (minimal) actions still structures what it can learn and when. The feedback loop's power does not *require* strong environmental coupling, though it benefits from it.
 
 ## The Three Levels of Epistemic Access
 
@@ -52,6 +52,8 @@ This requires the model to simulate alternative histories — to run the causal 
 - Boyd's mental simulation of alternative strategies
 - Scientific reasoning about controlled experiments from observational data
 - Moral reasoning (what would have happened if I had acted differently?)
+
+Note that *forward-looking* deliberation — comparing candidate actions before choosing — primarily exercises Level 2 (iterated mental intervention), shading into Level 3 when the agent evaluates past choices to refine the comparison. See TF-06 for the full treatment of deliberation as interventional and counterfactual simulation.
 
 ## Why This Is an Axiom
 
@@ -91,7 +93,9 @@ The difference — the causal information yield — measures how much of the act
 
 **Why this is non-trivial**: $\text{CIY} = 0$ for a passive observer (no action, or action independent of environment response). $\text{CIY} > 0$ when the agent's action causally affects the environment state, which in turn affects the observation. This is precisely the information that distinguishes Level 2 (interventional) from Level 1 (associational) epistemic access.
 
-Maximizing causal information yield is exactly what good exploration (TF-06) does: choosing actions whose consequences are maximally informative about the causal structure of the environment.
+**Note on non-negativity.** TF-00 types CIY as $\geq 0$. This is not guaranteed by the definition above in full generality — the difference of two mutual information terms can in principle be negative under certain confounding structures. Non-negativity holds when (a) actions are randomized (the standard interventional case, where the confounding term vanishes), or (b) the causal Markov condition holds with respect to the agent's action node. In adversarial settings, an agent may experience *effective* negative CIY from deceptive responses (TF-06), but this is better understood as the source injecting misinformation through the observation channel rather than CIY itself being negative. A fully rigorous treatment would either restrict CIY's definition to settings where non-negativity is guaranteed or define it as $\max(0, \ldots)$. For the purposes of TFT, we assume the agent operates in conditions where non-negativity holds for its own actions, while noting this as an assumption rather than a proven property.
+
+Maximizing causal information yield is exactly what good exploration (TF-06) does: choosing actions whose consequences are maximally informative about the causal structure of the environment. Note that the "environment" may include other agents whose models can be queried. When a query action elicits a response from a knowledgeable source, the CIY can be extremely high — the response is causally downstream of the query and carries pre-compressed information about the environment that would require many direct probes to reconstruct. See TF-06 on query actions.
 
 ## CIY Identifiability
 
