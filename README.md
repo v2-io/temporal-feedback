@@ -32,7 +32,7 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 
 ## Reading Guide
 
-**Core theorem path** (minimal chain for the main formal results): TF-01 (scope) → TF-03 (model) → TF-05 (mismatch) → TF-06 (gain) → TF-11 (tempo & persistence) → Appendix A (Lyapunov stability). This chain contains all formal propositions and can be read in ~45 minutes. [Appendix E](Appendix-E-TFT-Core.md) presents this chain as a self-contained condensed reference.
+**Core theorem path** (minimal chain for the main formal results): TF-01 (scope) → TF-03 (model) → TF-05 (mismatch) → TF-06 (gain) → TF-11 (tempo & persistence) → Appendix A (Lyapunov stability). This chain contains the main formal backbone and can be read in ~45 minutes. [Appendix E](Appendix-E-TFT-Core.md) presents this chain as a self-contained condensed reference.
 
 **Supporting material**: TF-00 (notation — consult as needed), TF-02 (causal structure — foundational but conceptual), TF-04 (event-driven dynamics — generalizes discrete-time notation), TF-07 (action selection), TF-08 (exploration-exploitation), TF-09 (deliberation cost), TF-10 (structural adaptation). These enrich the theory with conceptual depth and domain connections but are not required for the main formal results.
 

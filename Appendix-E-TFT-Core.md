@@ -31,7 +31,7 @@ $$\delta_t = o_t - \hat{o}_t, \quad \hat{o}_t = \mathbb{E}[o_t \mid M_{t-1}, a_{
 
 **Proposition 5.1 (Mismatch Inevitability).** For any $(Agent, \Omega) \in \mathcal{S}_{\text{TFT}}$:
 
-$$\mathbb{E}[\|\delta_t\|^2] = \underbrace{\mathbb{E}[\|\hat{o}_t - \bar{o}_t\|^2]}_{\text{model error (reducible)}} + \underbrace{\mathbb{E}[\text{Var}(o_t \mid \Omega_t)]}_{\text{observation noise (irreducible)}} > 0$$
+$$\mathbb{E}[\|\delta_t\|^2] = \underbrace{\mathbb{E}[\|\hat{o}_t - \bar{o}_t\|^2]}_{\text{model error (reducible)}} + \underbrace{\mathbb{E}[\text{Var}(o_t \mid \Omega_t, a_{t-1})]}_{\text{observation noise (irreducible)}} > 0$$
 
 whenever observation noise is non-degenerate or the model's predictive mean is misspecified.
 

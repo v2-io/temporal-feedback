@@ -1,13 +1,10 @@
 # Appendix B: Operationalization — Estimation Procedures
 
-**Epistemic status**: This appendix is a procedures document. It specifies estimation recipes for core TFT quantities and gives one compact end-to-end worked example that instantiates the full chain from TF-01 through Appendix A under explicit assumptions.
+**Epistemic status**: This appendix is a procedures document. It specifies estimation recipes for core TFT quantities. End-to-end worked examples that instantiate the full chain are provided in [Appendix C](Appendix-C-Kalman-Example.md) (Kalman, exact) and [Appendix D](Appendix-D-RL-Example.md) (RL, approximate).
 
 ## Purpose
 
-This appendix addresses the measurement gap between TFT's formal objects and practical deployment:
-
-1. How to estimate $U_M$, $U_o$, $\rho$, $\alpha$, $R$, and $\|\delta_{\text{critical}}\|$ from data.
-2. How to run one coherent domain instantiation that touches TF-01 through Appendix A without hidden steps.
+This appendix addresses the measurement gap between TFT's formal objects and practical deployment: how to estimate $U_M$, $U_o$, $\rho$, $\alpha$, $R$, and $\|\delta_{\text{critical}}\|$ from data.
 
 ## B.1 Measurement Targets
 
