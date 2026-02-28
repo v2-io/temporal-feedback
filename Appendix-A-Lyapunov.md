@@ -6,6 +6,7 @@
 
 TF-11 derives the persistence threshold ($\mathcal{T} > \rho$) and steady-state mismatch ($|\delta|_{ss} = \rho/\mathcal{T}$) from a specific linear ODE hypothesis:
 
+*[Hypothesis (from TF-11)]*
 $$\frac{d|\delta|}{dt} = -\mathcal{T} \cdot |\delta| + \rho$$
 
 This is explicitly labeled in TF-11 as a first-order approximation. The linear form yields clean closed-form results but commits to a specific functional relationship between mismatch magnitude and correction rate. As noted in TF-11 Open Question #1, the true correction dynamics are almost certainly nonlinear — exhibiting saturation at large mismatch, threshold effects near zero, and structural breakdown when the model class is exhausted.
@@ -46,6 +47,7 @@ Let $\delta(t) \in \mathbb{R}^n$ be the mismatch vector — the difference betwe
 
 The mismatch dynamics are:
 
+*[Definition (Dynamics Setup)]*
 $$\frac{d\delta}{dt} = -F(\mathcal{T}, \delta) + w(t)$$
 
 where:
@@ -59,31 +61,34 @@ The linear case from TF-11 has $F(\mathcal{T}, \delta) = \mathcal{T} \cdot \delt
 
 We require only qualitative properties, not a specific functional form:
 
-**(A1) Zero correction at zero mismatch:**
+### (A1) Zero Correction at Zero Mismatch
 
+*[Assumption A1]*
 $$F(\mathcal{T}, 0) = 0$$
 
 No correction is applied when the model perfectly matches reality.
 
-**(A2) Monotone correction (sector condition):**
+### (A2) Monotone Correction *(Sector Condition)*
 
 There exist $\alpha, \beta > 0$ with $0 < \alpha \leq \beta$ such that:
 
+*[Assumption A2]*
 $$\alpha \|\delta\|^2 \leq \delta^T F(\mathcal{T}, \delta) \leq \beta \|\delta\|^2 \quad \forall \delta$$
 
 The correction function always points "inward" (reducing mismatch), and its magnitude is bounded above and below relative to $\|\delta\|^2$. The linear case has $\alpha = \beta = \mathcal{T}$. A saturating correction has $\alpha$ decreasing for large $\|\delta\|$. A threshold correction has $\alpha = 0$ for small $\|\delta\|$.
 
 For the main results, we use the weaker local form:
 
-**(A2') Local sector condition:**
+### (A2') Local Sector Condition
 
 There exists a region $\mathcal{B}_R = \{\delta : \|\delta\| \leq R\}$ and $\alpha > 0$ such that:
 
+*[Assumption A2']*
 $$\delta^T F(\mathcal{T}, \delta) \geq \alpha \|\delta\|^2 \quad \forall \delta \in \mathcal{B}_R$$
 
 This allows the correction to break down outside $\mathcal{B}_R$ — the structural adaptation regime of TF-10.
 
-**(A3) Tempo monotonicity:**
+### (A3) Tempo Monotonicity
 
 For fixed $\delta$, $\delta^T F(\mathcal{T}, \delta)$ is monotone increasing in $\mathcal{T}$. Higher tempo means faster correction.
 
@@ -91,6 +96,7 @@ For fixed $\delta$, $\delta^T F(\mathcal{T}, \delta)$ is monotone increasing in 
 
 ## Candidate Lyapunov Function
 
+*[Definition (Lyapunov Candidate)]*
 $$V(\delta) = \frac{1}{2}\|\delta\|^2$$
 
 This is the simplest choice: positive definite, radially unbounded, continuously differentiable. Its level sets $V = c$ are spheres of radius $\sqrt{2c}$ in mismatch space.
@@ -105,7 +111,9 @@ This is the simplest choice: positive definite, radially unbounded, continuously
 
 Compute $\dot{V}$ along trajectories:
 
+*[Derived (Proof Step)]*
 $$\dot{V} = \delta^T \dot{\delta} = \delta^T[-F(\mathcal{T}, \delta) + w(t)]$$
+*[Derived (Proof Step)]*
 $$= -\delta^T F(\mathcal{T}, \delta) + \delta^T w(t)$$
 
 By (A2'): $\delta^T F(\mathcal{T}, \delta) \geq \alpha\|\delta\|^2$
@@ -114,6 +122,7 @@ By Cauchy-Schwarz: $\delta^T w(t) \leq \|\delta\| \cdot \|w(t)\| \leq \rho\|\del
 
 Therefore:
 
+*[Derived (Proof Step)]*
 $$\dot{V} \leq -\alpha\|\delta\|^2 + \rho\|\delta\| = -\|\delta\|(\alpha\|\delta\| - \rho)$$
 
 $\dot{V} < 0$ whenever $\|\delta\| > \rho/\alpha$.
@@ -134,6 +143,7 @@ The agent persists iff $R^* < R$, i.e., iff $\rho/\alpha < R$, i.e., iff $\alpha
 
 **Statement.** Under the conditions of A.1, the agent can tolerate a sudden increase in disturbance rate of:
 
+*[Derived (Proposition A.2)]*
 $$\Delta\rho^* = \alpha R - \rho$$
 
 without mismatch diverging (where $R$ is the radius of the sector-condition region from A2'). Beyond this, $R^*$ exceeds $R$ and the correction function may fail.
@@ -145,7 +155,7 @@ without mismatch diverging (where $R$ is the radius of the sector-condition regi
 - An agent operating well below capacity ($\rho \ll \alpha R$) has a large reserve — it is **robust**.
 - An agent near its limit ($\rho \approx \alpha R$) has a small reserve — it is **fragile**.
 
-**Domain instances:**
+### Domain Instances
 
 | Domain | Large $\Delta\rho^*$ (robust) | Small $\Delta\rho^*$ (fragile) |
 |--------|-------------------------------|-------------------------------|
@@ -162,6 +172,7 @@ without mismatch diverging (where $R$ is the radius of the sector-condition regi
 
 **Setup.** Let both agents satisfy (A1), (A2'), (A3) with respective parameters $(\alpha_A, R_A, \rho_{A,\text{base}})$ and $(\alpha_B, R_B, \rho_{B,\text{base}})$. The coupling:
 
+*[Assumption (Coupling Model)]*
 $$\rho_B = \rho_{B,\text{base}} + \gamma_A \cdot \mathcal{T}_A$$
 
 where $\gamma_A > 0$ represents the effectiveness of $A$'s actions at disrupting $B$'s environment. (This factor depends on coupling strength, observability, and action impact — the factors in TF-01's coupling spectrum.)
@@ -170,23 +181,27 @@ where $\gamma_A > 0$ represents the effectiveness of $A$'s actions at disrupting
 
 $B$'s ultimately bounded radius under coupled dynamics is:
 
+*[Derived (Proof Step)]*
 $$R^*_B = \frac{\rho_{B,\text{base}} + \gamma_A \cdot \mathcal{T}_A}{\alpha_B}$$
 
 $B$ diverges (exits its sector-condition region) when $R^*_B > R_B$, i.e., when:
 
+*[Derived (Proof Step)]*
 $$\gamma_A \cdot \mathcal{T}_A > \alpha_B R_B - \rho_{B,\text{base}} = \Delta\rho^*_B$$
 
 That is:
 
+*[Derived (Proof Step)]*
 $$\mathcal{T}_A > \frac{\Delta\rho^*_B}{\gamma_A}$$
 
 Symmetrically, $B$ destabilizes $A$ when:
 
+*[Derived (Proof Step)]*
 $$\mathcal{T}_B > \frac{\Delta\rho^*_A}{\gamma_B}$$
 
 The adversarial outcome depends on whether either agent can push the other past its stability limit. $\square$
 
-**Interpretation.** "Getting inside the opponent's OODA loop" has a precise Lyapunov characterization: Agent $A$ destabilizes Agent $B$ when $A$'s tempo, multiplied by coupling effectiveness, exceeds $B$'s adaptive reserve $\Delta\rho^*_B$. This is richer than TF-11's linear steady-state ratio ($|\delta_B|/|\delta_A| = \mathcal{T}_A/\mathcal{T}_B$) because it captures:
+**Interpretation.** "Getting inside the opponent's OODA loop" has a precise Lyapunov characterization: Agent $A$ destabilizes Agent $B$ when $A$'s tempo, multiplied by coupling effectiveness, exceeds $B$'s adaptive reserve $\Delta\rho^*_B$. This is richer than TF-11's linear steady-state coupled scaling law (under coupling-dominant disturbance, $|\delta_B|/|\delta_A| \approx (\gamma_A/\gamma_B)(\mathcal{T}_A/\mathcal{T}_B)^2$) because it captures:
 
 - **Asymmetric coupling** ($\gamma_A \neq \gamma_B$): an agent with lower tempo but higher coupling effectiveness can still win.
 - **Finite reserves**: an agent with very high $\mathcal{T}$ but operating near its model-class limit ($\Delta\rho^*$ small) is vulnerable despite high tempo.
@@ -202,6 +217,7 @@ The linear analysis in TF-11 gives the steady-state ratio — a clean quantitati
 
 **Mechanism.** Once $B$ exits $\mathcal{B}_{R_B}$:
 
+*[Discussion — Mechanism Schematic]*
 $$\|\delta_B\| \uparrow \;\Rightarrow\; B\text{'s actions become erratic} \;\Rightarrow\; \gamma_A \uparrow \;\Rightarrow\; \rho_B \uparrow \;\Rightarrow\; \|\delta_B\| \uparrow$$
 
 With $\gamma_A$ now an increasing function of $\|\delta_B\|$, the disturbance term in $B$'s dynamics grows superlinearly. $\dot{V}_B > 0$ and increasing — mismatch accelerates away from the stability region.
@@ -218,10 +234,12 @@ With $\gamma_A$ now an increasing function of $\|\delta_B\|$, the disturbance te
 
 The temporal nesting in TF-11 creates a coupled multi-timescale system with $N$ levels. Singular perturbation theory provides tools to analyze such systems. Define a hierarchy of state variables:
 
+*[Definition (State Hierarchy)]*
 $$x^{(1)}, \; x^{(2)}, \; \ldots, \; x^{(N)}$$
 
 where $x^{(1)}$ is the fastest (e.g., mismatch at the reactive/parametric level) and $x^{(N)}$ is the slowest (e.g., architectural or meta-structural state). The coupled dynamics:
 
+*[Formulation (A.4 Sketch)]*
 $$\dot{x}^{(k)} = \frac{1}{\epsilon_k} \, G^{(k)}\!\left(x^{(1)}, \ldots, x^{(N)}\right) + w^{(k)}(t)$$
 
 where $\epsilon_1 \ll \epsilon_2 \ll \cdots \ll \epsilon_N$ encode the timescale separation and each $G^{(k)}$ may depend on the states at all levels (since each level operates on the output of the levels below and is parameterized by the levels above).
@@ -233,7 +251,9 @@ The simplest nontrivial instance has $N = 2$:
 - Fast state $x^{(1)} = \delta$ (mismatch under parametric adaptation)
 - Slow state $x^{(2)} = \mathcal{M}$ (model class, changing on a structural timescale)
 
+*[Formulation (A.4 Sketch)]*
 $$\dot{x}^{(1)} = -F(\mathcal{T}, x^{(1)}; x^{(2)}) + w(t) \quad \text{(fast: parametric adaptation)}$$
+*[Formulation (A.4 Sketch)]*
 $$\dot{x}^{(2)} = \epsilon \, G(x^{(1)}, x^{(2)}) \quad \text{(slow: structural adaptation)}$$
 
 where $\epsilon \ll 1$ reflects the timescale separation (structural dynamics evolve on a much slower timescale) and $F$ depends on $x^{(2)}$ (the correction function is determined by the current model class).
@@ -260,7 +280,7 @@ The sketch suggests that TF-11's convergence constraint is not merely a heuristi
 |--------|---------------|-------------|---------------------|
 | **A.1** (Bounded Mismatch) | Mismatch ultimately bounded by $R^* = \rho/\alpha$ | (A1), (A2'), bounded $\rho$ | $\alpha = \mathcal{T}$ gives $R^* = \rho/\mathcal{T}$ (Prop 11.1) |
 | **A.2** (Stability Margin) | Adaptive reserve $\Delta\rho^* = \alpha R - \rho$ | Same as A.1 | $R \to \infty$ for linear (always stable if $\mathcal{T} > 0$) |
-| **A.3** (Adversarial) | $A$ destabilizes $B$ when $\gamma_A \mathcal{T}_A > \Delta\rho^*_B$ | Both agents satisfy A.1; linear coupling | Recovers tempo-ratio advantage |
+| **A.3** (Adversarial) | $A$ destabilizes $B$ when $\gamma_A \mathcal{T}_A > \Delta\rho^*_B$ | Both agents satisfy A.1; linear coupling | Consistent with TF-11 coupled scaling and gives explicit instability threshold |
 | **A.3.1** (Effects Spiral) | Positive-feedback instability post-destabilization | $\gamma_A$ increasing in $\|\delta_B\|$ | Not present in linear analysis |
 | **A.4** (Multi-Timescale) | *Sketch*: $N$-level timescale separation → composite stability | $\epsilon_k / \epsilon_{k+1} \ll 1$; each level stable given slower levels | Recovers convergence constraint $\nu_{n+1} \ll \nu_n$ |
 
