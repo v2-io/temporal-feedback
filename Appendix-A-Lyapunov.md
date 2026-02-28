@@ -126,6 +126,8 @@ The agent persists iff $R^* < R$, i.e., iff $\rho/\alpha < R$, i.e., iff $\alpha
 
 **The persistence threshold, generalized.** The agent persists (mismatch remains bounded within the model class capacity) iff $\rho/\alpha < R$. If the correction function breaks down (A2' fails) before $R^*$ is reached, the agent may diverge. This IS TF-10's structural adaptation trigger: when $\rho/\alpha > R$ (the environment demands more correction than the model class can provide), parametric adaptation fails and structural change is required.
 
+**Note on the bounded-disturbance assumption.** Proposition A.1 requires $\|w(t)\| \leq \rho$ — that disturbance magnitude has a finite upper bound. This is appropriate for the typical operating regime of most adaptive systems, but excludes heavy-tailed (e.g., power-law distributed) environmental shocks where $\|w(t)\|$ can exceed any finite bound with non-negligible probability. Financial crises, ecological catastrophes, and strategic surprise are examples where the bounded-disturbance assumption may be violated. For such environments, stochastic Lyapunov methods — input-to-state stability in probability (ISSp), martingale-based stability, or moment bounds on stochastic Lyapunov functions — would be needed to characterize persistence in a probabilistic rather than deterministic sense. The bounded case gives worst-case guarantees for the typical regime; extreme tail events are better understood as triggers for structural adaptation (TF-10) rather than as disturbances to be absorbed parametrically.
+
 ---
 
 ## Proposition A.2: Stability Margin (Adaptive Reserve)

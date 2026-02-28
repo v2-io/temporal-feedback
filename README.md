@@ -19,7 +19,6 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 | [TF-06](TF-06.md) | The Update Gain | Derived + Empirical Claim | Draft |
 | [TF-07](TF-07.md) | Action Selection | Derived + Discussion | Draft |
 | [TF-08](TF-08.md) | The Exploration-Exploitation Balance | Hypothesis + Discussion | Draft |
-
 | [TF-09](TF-09.md) | The Cost of Deliberation | Derived (conditional on TF-11) | Draft |
 | [TF-10](TF-10.md) | Structural Adaptation | Derived + Empirical | Draft |
 | [TF-11](TF-11.md) | Temporal Nesting and Adaptive Tempo | Derived + Hypothesis | Draft |
