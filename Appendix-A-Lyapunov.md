@@ -4,10 +4,10 @@
 
 ## Motivation
 
-TF-11 derives the persistence threshold ($\mathcal{T} > \rho$) and steady-state mismatch ($|\delta|_{ss} = \rho/\mathcal{T}$) from a specific linear ODE hypothesis:
+TF-11 derives the persistence threshold ($\mathcal{T} > \rho/\|\delta_{\text{critical}}\|$) and steady-state mismatch ($\|\delta\|_{ss} = \rho/\mathcal{T}$) from a specific linear ODE hypothesis:
 
 *[Hypothesis (from TF-11)]*
-$$\frac{d|\delta|}{dt} = -\mathcal{T} \cdot |\delta| + \rho$$
+$$\frac{d\|\delta\|}{dt} = -\mathcal{T} \cdot \|\delta\| + \rho$$
 
 This is explicitly labeled in TF-11 as a first-order approximation. The linear form yields clean closed-form results but commits to a specific functional relationship between mismatch magnitude and correction rate. As noted in TF-11 Open Question #1, the true correction dynamics are almost certainly nonlinear — exhibiting saturation at large mismatch, threshold effects near zero, and structural breakdown when the model class is exhausted.
 
@@ -27,7 +27,7 @@ A Lyapunov approach proves persistence and stability under much weaker assumptio
 
 ### What This Analysis Does NOT Illuminate
 
-1. **Quantitative steady-state values.** Lyapunov gives *bounds*, not exact values. We get "$\|\delta\|$ is bounded by $R^*$" but not "$|\delta| \to \rho/\mathcal{T}$ exactly." The linear analysis (TF-11) remains necessary for quantitative predictions.
+1. **Quantitative steady-state values.** Lyapunov gives *bounds*, not exact values. We get "$\|\delta\|$ is bounded by $R^*$" but not "$\|\delta\| \to \rho/\mathcal{T}$ exactly." The linear analysis (TF-11) remains necessary for quantitative predictions.
 
 2. **Convergence rates.** Standard Lyapunov tells you stable/unstable, not how fast. Exponential stability results exist but require additional assumptions that effectively recover the linear case.
 
@@ -52,7 +52,7 @@ $$\frac{d\delta}{dt} = -F(\mathcal{T}, \delta) + w(t)$$
 
 where:
 
-- $F(\mathcal{T}, \delta)$ is the **correction function** — how the agent's adaptive process reduces mismatch. This subsumes the update gain $\eta^*$, event rate $\nu$, and the structure of the update rule (TF-06).
+- $F(\mathcal{T}, \delta): \mathbb{R}_+ \times \mathbb{R}^n \to \mathbb{R}^n$ is the **correction function** — how the agent's adaptive process reduces mismatch. It maps to the same space as $\delta$ (so that the inner product $\delta^T F$ in the sector condition is well-defined). This subsumes the update gain $\eta^*$, event rate $\nu$, and the structure of the update rule (TF-06).
 - $w(t)$ is the **disturbance** — new mismatch introduced by environmental change, with $\|w(t)\| \leq \rho$ (bounded disturbance rate).
 
 The linear case from TF-11 has $F(\mathcal{T}, \delta) = \mathcal{T} \cdot \delta$.
@@ -176,6 +176,8 @@ without mismatch diverging (where $R$ is the radius of the sector-condition regi
 $$\rho_B = \rho_{B,\text{base}} + \gamma_A \cdot \mathcal{T}_A$$
 
 where $\gamma_A > 0$ represents the effectiveness of $A$'s actions at disrupting $B$'s environment. (This factor depends on coupling strength, observability, and action impact — the factors in TF-01's coupling spectrum.)
+
+**Note on decoupling assumption.** This coupling model treats $\mathcal{T}_A$ as an exogenous parameter shaping $B$'s disturbance bound, rather than modeling the fully coupled dynamical system where both agents' mismatch states co-evolve (i.e., $w_B(t) = f(\delta_A(t), \delta_B(t), \ldots)$). The analysis therefore characterizes the *destabilization threshold* — the conditions under which $A$ *can* push $B$ past its stability boundary — rather than the full transient dynamics of the coupled system. This is a worst-case bound (treating $A$ as operating at its steady-state tempo, the most favorable case for $A$). A full coupled Lyapunov analysis with a joint function $V(\delta_A, \delta_B)$ would capture mutual feedback effects but requires specifying how each agent's mismatch state affects the other's disturbance in real time — an extension noted in TF-11 Open Question #2.
 
 **Proof sketch.**
 
