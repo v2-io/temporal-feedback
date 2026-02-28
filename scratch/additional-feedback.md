@@ -1,15 +1,16 @@
-# Consolidated Pending Items (2026-02-28)
+# Consolidated Pending Items (2026-02-28, updated)
 
-All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), plus anything still pending from earlier scratch feedback files (03, 04, 05, 06) and scratch/00. Items marked with source(s) for traceability.
+All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), earlier scratch feedback files (03, 04, 05, 06), scratch/00, and the latest round (scratch/08-full-read-feedback, scratch/08-comprehensive-feedback). Items marked with source(s) for traceability.
 
 ---
 
 ## A. Proof / Formal Rigor
 
-**A1. TF-04 Prop 4.1 marginalization gap** (Claude audit A2)
+**A1. TF-04 Prop 4.1 proof tightening** ~~DONE (Session 6)~~ (Claude audit A2, scratch/08-full-read #2)
 - The proof sketch jumps from "M is not sufficient" to "prediction differs from true conditional mean" without showing the marginalization step explicitly.
-- Severity: Presentation, not correctness. The claim is true but the proof should show *why* insufficient statistics yield biased conditional expectations.
-- Fix: Add one line showing E[o|M] != E[o|Omega] when M loses information, via data processing inequality or Jensen's inequality.
+- scratch/08-full-read adds: make the proposition conditional on at least one of (a) nonzero observation noise, or (b) irreducible model-environment mismatch under the representational class. Rewrite decomposition with explicit expectation over both terms. Clarify whether strict positivity is almost sure, in expectation, or on a nonzero-measure subset.
+- Severity: Presentation + precision, not correctness.
+- Fix: Add explicit expectation notation; condition on noise/mismatch assumption; state measure-theoretic sense of "strict positivity."
 
 **A2. TF-06.5 Prop 6.5.1 endogenous |delta_post|** (Claude audit A3)
 - The proposition treats |delta_post| (post-deliberation mismatch) as exogenous, but it depends on the quality of deliberation, which depends on M_t, which is what we're evaluating.
@@ -30,6 +31,25 @@ All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), plus 
 - The information bottleneck provides a natural criterion (marginal predictive gain per marginal complexity = 0), noted in TF-07's structural overfitting section, but not elevated to a formal proposition.
 - Fix: Consider a Prop 7.2 stating the IB-based threshold condition explicitly.
 
+**A6. TF-01 scope conditioning should be action-aware** ~~DONE (Session 6)~~ (scratch/08-full-read #1)
+- Current scope uses H(Omega_t | o_{1:t}) > 0, but the rest of the framework is action-conditioned. This creates a subtle mismatch between passive and active formulations.
+- Fix: Replace with H(Omega_t | H_t) > 0 where H_t explicitly contains the action-observation sequence, or equivalently H(Omega_t | o_{1:t}, a_{1:t-1}) > 0. Keeps TF-01 aligned with TF-02/TF-04/TF-06.
+- Severity: High — foundational scope definition should match the rest of the framework.
+
+**A7. CIY sign semantics reconciliation** ~~DONE (Session 6)~~ (scratch/08-full-read #3)
+- TF-00 types CIY as >= 0; TF-01b notes the MI-difference form can be negative in general; TF-06 discusses "negative effective CIY" for deception.
+- This is partially tracked (CIY non-negativity was noted as assumption in TF-01b), but the three documents are not yet fully consistent.
+- scratch/08-full-read proposes: split into CIY_raw(a) (formal MI difference, can be negative) and CIY_eff(a) (operationally clipped/calibrated value used in policy). Or: explicitly constrain CIY definition to identifiable interventional settings where non-negativity holds.
+- Fix: Choose one approach and propagate consistently through TF-00, TF-01b, and TF-06.
+
+**A8. TF-08 adversarial ratio coupling assumptions** ~~DONE (Session 6)~~ (scratch/08-full-read #4)
+- The adversarial mismatch ratio is stated purely in tempos, but requires symmetry/normalization assumptions on the coupling that aren't displayed.
+- Fix: Add explicit assumption line near the adversarial ratio equation, or keep coupling coefficients (gamma_A) in the displayed expression rather than absorbing them.
+
+**A9. TF-02 policy-conditional sufficiency** ~~DONE (Session 6)~~ (scratch/08-full-read #5)
+- Sufficiency defined by conditioning on full future action sequence is analytically clean but practically policy-endogenous.
+- Fix: Define sufficiency relative to a policy class Pi, or an intervention distribution over future actions. This makes S(M_t) estimable/testable.
+
 ---
 
 ## B. Notation / Typing / Consistency
@@ -47,7 +67,16 @@ All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), plus 
 - TF-05 discusses domain validation case by case but doesn't summarize overall confidence in the universal gain claim. Comparable to the confidence estimates in other documents.
 - Fix: Add a brief "Overall assessment" paragraph with a confidence estimate.
 
-**B4. CIY threading through TF-05** (scratch/06)
+**B4. Scalar vs vector mismatch notation** ~~DONE (Session 6)~~ (scratch/08-full-read medium #2)
+- The scalar norm form |delta| and vector dynamics both appear, but the reduction assumptions should be explicit at chapter boundaries (TF-08 / Appendix A transition).
+- Fix: Add a brief note at the start of Appendix A or end of TF-08 stating when the scalar reduction is valid.
+
+**B5. Consolidate repeated explanatory motifs** (scratch/08-full-read medium #3)
+- Some prose motifs (adversarial dynamics, persistence threshold intuition) are repeated across TF-06, TF-08, and Appendix A.
+- Cross-references are good, but further consolidation would reduce maintenance burden.
+- Fix: Keep the canonical statement in one place, reduce the others to brief summaries + cross-reference.
+
+**B6. CIY threading through TF-05** (scratch/06)
 - CIY is defined in TF-01b, used in TF-06's policy objective, but not explicitly connected to TF-05's gain discussion. The gain on an observation channel should relate to the CIY of the action that generated that observation.
 - Fix: Add a brief note in TF-05 connecting channel-specific gain to the CIY framework.
 
@@ -107,7 +136,12 @@ These are not gaps in the current theory but directions worth considering. Inclu
 - Currently noted as an open question. Full treatment would define T as a positive-definite matrix with persistence condition T - diag(rho) > 0 (positive-definite).
 - Captures dimensional decoupling: high tactical tempo but low strategic tempo.
 
-**D7. Citation confidence tiers for v7** (scratch/03, scratch/06)
+**D7. Trust meta-model formalization** (scratch/08-comprehensive #4.1)
+- TF-06 introduces trust-dependent gain for query actions, but the mechanism by which an agent evaluates U_M of its *sources* to set eta* isn't formalized.
+- Would bridge TFT with social epistemology and reputation systems.
+- Related to the adversarial mirror (trust as second-order attack surface), but the constructive/cooperative side needs its own treatment.
+
+**D8. Citation confidence tiers for v7** (scratch/03, scratch/06)
 - The v7 source material cites a wide range from peer-reviewed to blog posts.
 - Triage into Tier 1 (primary/archival), Tier 2 (credible secondary), Tier 3 (exploratory/commentary).
 - Important for eventual publication but not blocking for theory development.

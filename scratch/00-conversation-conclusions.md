@@ -586,6 +586,37 @@ Changes made:
 39. **README: Game theory gap noted** in "What's Potentially Missing" —
     TFT makes incentive compatibility formally precise but doesn't answer it.
 
+### Session 6: Consistency Pass from scratch/08 Feedback
+
+40. **TF-01: Scope conditioning made action-aware.** Replaced H(Omega|o_{1:t})
+    with H(Omega|H_t) in formal scope definition and exclusion clause, aligning
+    with the rest of the framework which conditions on the full interaction history.
+
+41. **TF-00: CIY sign semantics reconciled.** Changed CIY type from "Scalar >= 0"
+    to "Scalar (assumed >= 0; see note)" with inline explanation of when non-negativity
+    holds and cross-references to TF-01b and TF-06 adversarial discussion.
+
+42. **TF-08: Adversarial ratio coupling assumptions made explicit.** Added coupling
+    effectiveness coefficients gamma_A, gamma_B to the adversarial dynamics equations.
+    The clean ratio T_A/T_B is now explicitly flagged as requiring symmetric coupling
+    and proportional action magnitude assumptions.
+
+43. **TF-04: Prop 4.1 proof tightened.** Added explicit assumptions (non-degenerate
+    noise or strict model inadequacy). Rewrote proof with proper decomposition showing
+    cross-term vanishing, data processing inequality for model error term, and both
+    sources of positivity. Updated decomposition section for consistency.
+
+44. **TF-02: Policy-conditional sufficiency note added.** The full-sequence definition
+    S(M_t) conditioning on a_{t:infty} is the theoretical ideal; a practical variant
+    S_Pi(M_t) restricting to a policy class Pi is noted for operationalization.
+
+45. **TF-08: Scalar vs vector reduction note added.** Bridging section before Open
+    Questions explaining when the scalar |delta| treatment is valid and when the
+    full vector formulation (Appendix A) is needed.
+
+46. **scratch/additional-feedback.md created and updated.** Consolidated all pending
+    items across all feedback sources. Items A1, A6-A9, B4 marked as done.
+
 ### Still Pending from Reviews
 
 - TF-03 track decision (minimal async vs. full stochastic process)
