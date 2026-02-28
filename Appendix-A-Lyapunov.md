@@ -11,7 +11,7 @@ $$\frac{d\|\delta\|}{dt} = -\mathcal{T} \cdot \|\delta\| + \rho$$
 
 This is explicitly labeled in TF-11 as a first-order approximation. The linear form yields clean closed-form results but commits to a specific functional relationship between mismatch magnitude and correction rate. As noted in TF-11 Open Question #1, the true correction dynamics are almost certainly nonlinear — exhibiting saturation at large mismatch, threshold effects near zero, and structural breakdown when the model class is exhausted.
 
-A Lyapunov approach proves persistence and stability under much weaker assumptions: any correction dynamics satisfying qualitative monotonicity properties. The results below are strictly more general than TF-11's linear analysis — the linear case is recovered as a special case where the sector bounds coincide.
+A Lyapunov approach[^khalil2002] proves persistence and stability under much weaker assumptions: any correction dynamics satisfying qualitative monotonicity properties. The results below are strictly more general than TF-11's linear analysis — the linear case is recovered as a special case where the sector bounds coincide.
 
 ### What This Analysis Illuminates
 
@@ -70,7 +70,7 @@ No correction is applied when the model perfectly matches reality.
 
 ### (A2) Monotone Correction *(Sector Condition)*
 
-There exist $\alpha, \beta > 0$ with $0 < \alpha \leq \beta$ such that:
+There exist $\alpha, \beta > 0$ with $0 < \alpha \leq \beta$ such that (following the sector-condition framework of Lur'e[^lure1957]):
 
 *[Assumption A2]*
 $$\alpha \|\delta\|^2 \leq \delta^T F(\mathcal{T}, \delta) \leq \beta \|\delta\|^2 \quad \forall \delta$$
@@ -287,3 +287,9 @@ The sketch suggests that TF-11's convergence constraint is not merely a heuristi
 | **A.4** (Multi-Timescale) | *Sketch*: $N$-level timescale separation → composite stability | $\epsilon_k / \epsilon_{k+1} \ll 1$; each level stable given slower levels | Recovers convergence constraint $\nu_{n+1} \ll \nu_n$ |
 
 **Key value of the Lyapunov approach.** The persistence threshold and adversarial results are no longer contingent on the linear hypothesis. They hold for any correction dynamics satisfying the sector condition — a mild qualitative assumption that says "correction points inward and is proportional (within bounds) to mismatch." This is a significant epistemic upgrade: from *hypothesis-dependent* to *robust under qualitative assumptions*.
+
+---
+
+[^khalil2002]: Khalil, H. K. (2002). *Nonlinear Systems* (3rd ed.). Prentice Hall. Chapters 4 (Lyapunov stability), 9 (input-output stability), 14 (singular perturbations).
+[^sontag1989]: Sontag, E. D. (1989). "Smooth stabilization implies coprime factorization." *IEEE Trans. Automatic Control*, 34(4), 435–443. Introduced input-to-state stability (ISS).
+[^lure1957]: Lur'e, A. I. (1957). *Some Nonlinear Problems in the Theory of Automatic Control*. Original sector-condition framework for absolute stability.

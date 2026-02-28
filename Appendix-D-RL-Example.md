@@ -152,12 +152,14 @@ With $\alpha = 0.091$ (the optimal value from D.5):
 
 $$\mathcal{T}_i = 0.25 \times 0.091 = 0.023 \; \text{step}^{-1}$$
 
-**Environment drift rate.** Each arm's mean drifts with variance $q = 0.01$ per step, contributing $\sqrt{q}$ in standard-deviation units of mismatch per step. The per-arm drift rate in mismatch-magnitude units is:
+**Environment drift rate.** Each arm's mean drifts with variance $q = 0.01$ per step. In this example, mismatch is measured in **reward units** (not surprise units), which is a simplification — the reward-unit and surprise-unit formulations coincide up to normalization by observation noise $\sigma^2$ (see TF-05, "Bridge from physical to surprise units"). In reward units, the per-arm drift rate is $\sqrt{q}$ (standard deviation of the random walk increment per step):
 
-*[Discussion --- Per-Arm Drift Rate]*
-$$\rho_i = \sqrt{q} = 0.1 \; \text{step}^{-1}$$
+*[Discussion — Per-Arm Drift Rate]*
+$$\rho_i = \sqrt{q} = 0.1 \; \text{reward units} \cdot \text{step}^{-1}$$
 
-**Persistence condition.** Per-arm persistence requires $\mathcal{T}_i > \rho_i / \|\delta_{\text{critical}}\|$. Taking $\|\delta_{\text{critical}}\| = 1$ (mismatch of one standard deviation of reward noise as the functional threshold):
+In surprise-equivalent (Mahalanobis) units, this would be $\rho_i^{\text{surprise}} = \sqrt{q}/\sigma = 0.1$, which happens to equal the reward-unit value because $\sigma = 1$ in this example. For systems where $\sigma \neq 1$, the normalization matters.
+
+**Persistence condition.** Per-arm persistence requires $\mathcal{T}_i > \rho_i / \|\delta_{\text{critical}}\|$. Taking $\|\delta_{\text{critical}}\| = 1$ (mismatch of one standard deviation of reward noise as the functional threshold, consistent with the reward-unit convention):
 
 $$\mathcal{T}_i = 0.023 \quad \text{vs.} \quad \rho_i = 0.1$$
 

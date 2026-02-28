@@ -12,6 +12,10 @@ $$\mathcal{S}_{\text{TFT}} = \{(Agent, \Omega) : \mathcal{O} \neq \emptyset, \; 
 
 Observations are lossy: $o_t = h(\Omega_t, a_{t-1}, \varepsilon_t)$. Actions affect the environment: $\Omega_{t+1} \sim T(\cdot \mid \Omega_t, a_t)$.
 
+## 1.5 Causal Structure (TF-02, Axiom)
+
+The interaction history $\mathcal{H}_t = (o_1, a_1, \ldots, a_{t-1}, o_t)$ is temporally ordered and irreversible. This ordering grounds three levels of epistemic access (Pearl's causal hierarchy): **associational** ($P(o_t \mid \mathcal{H}_{<t})$), **interventional** ($P(o_t \mid do(a_{t-1}), M_{t-1})$), and **counterfactual** ($P(o_t^{a'} \mid a_{t-1} = a, o_t = o)$). The **causal information yield** $\text{CIY}_q(a; M)$ — the expected KL divergence between the interventional outcome distribution of action $a$ and alternatives drawn from reference $q$ — measures how much an action reveals about causal structure. CIY is non-negative by construction, requires action variation for estimation (see TF-02 identifiability gate), and drives the exploration term in the policy objective (Section 5 below, TF-08).
+
 ## 2. The Model (TF-03, Formulation)
 
 Any persisting agent is analyzed as maintaining a **model** $M_t = \phi(\mathcal{H}_t) \in \mathcal{M}$ — a compression of its interaction history.
