@@ -617,6 +617,23 @@ Changes made:
 46. **scratch/additional-feedback.md created and updated.** Consolidated all pending
     items across all feedback sources. Items A1, A6-A9, B4 marked as done.
 
+47. **TF-05: Three improvements.** (a) Added "Scope of claim" paragraph qualifying
+    the universal gain form — structural form is the claim, scalar ratio is simplest
+    instantiation. (b) Added CIY connection section — high-CIY observations should
+    get more weight; currently implicit in U_M structure. (c) Added Overall Assessment
+    with confidence estimates: ~75% structural form is universal, ~40% scalar form
+    adequate in high-dimensional settings.
+
+48. **TF-00: Dependency DAG and Formal Results Index.** Added primary chain showing
+    document progression, key cross-links. Added table distinguishing formal
+    propositions (4.1, 6.5.1, 7.1, 8.1, A.1-A.3, A.3.1) from discussion-grade
+    claims (uncertainty ratio, unified policy, speed-quality substitutability,
+    action fluency, non-forkability).
+
+49. **B5 (prose consolidation) deferred.** Existing cross-references between TF-06,
+    TF-08, and Appendix A are already adequate; the documents serve different purposes
+    and the repetition is more helpful than harmful.
+
 ### Still Pending from Reviews
 
 - TF-03 track decision (minimal async vs. full stochastic process)

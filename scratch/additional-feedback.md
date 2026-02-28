@@ -54,16 +54,16 @@ All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), earli
 
 ## B. Notation / Typing / Consistency
 
-**B1. Universal gain language** (Codex medium #1)
+**B1. Universal gain language** ~~DONE (Session 6)~~ (Codex medium #1)
 - TF-05 states eta* = U_M/(U_M+U_o) as if it's a universal law, but for non-conjugate models and neural networks, "U_M" isn't well-defined as a scalar.
 - The document does discuss this in Open Questions, but the main claim's language could be more carefully qualified upfront.
 - Fix: Add a brief caveat near the main claim (not just in Open Questions) noting that the structural form is the claim, and the scalar ratio is the simplest instantiation.
 
-**B2. Axiom dependency order / dependency map** (Codex medium #3)
+**B2. Axiom dependency order / dependency map** ~~DONE (Session 6)~~ (Codex medium #3)
 - The theory would benefit from an explicit dependency diagram showing which results depend on which axioms/definitions.
 - Fix: Add to README or TF-00 a simple dependency DAG: TF-01 -> TF-01b -> TF-02 -> TF-03 -> TF-04 -> TF-05 -> TF-06 -> etc., with cross-links.
 
-**B3. TF-05 missing aggregate confidence** (Claude audit D2)
+**B3. TF-05 missing aggregate confidence** ~~DONE (Session 6)~~ (Claude audit D2)
 - TF-05 discusses domain validation case by case but doesn't summarize overall confidence in the universal gain claim. Comparable to the confidence estimates in other documents.
 - Fix: Add a brief "Overall assessment" paragraph with a confidence estimate.
 
@@ -71,12 +71,12 @@ All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), earli
 - The scalar norm form |delta| and vector dynamics both appear, but the reduction assumptions should be explicit at chapter boundaries (TF-08 / Appendix A transition).
 - Fix: Add a brief note at the start of Appendix A or end of TF-08 stating when the scalar reduction is valid.
 
-**B5. Consolidate repeated explanatory motifs** (scratch/08-full-read medium #3)
+**B5. Consolidate repeated explanatory motifs** ~~DEFERRED — cross-references already adequate~~ (scratch/08-full-read medium #3)
 - Some prose motifs (adversarial dynamics, persistence threshold intuition) are repeated across TF-06, TF-08, and Appendix A.
 - Cross-references are good, but further consolidation would reduce maintenance burden.
 - Fix: Keep the canonical statement in one place, reduce the others to brief summaries + cross-reference.
 
-**B6. CIY threading through TF-05** (scratch/06)
+**B6. CIY threading through TF-05** ~~DONE (Session 6)~~ (scratch/06)
 - CIY is defined in TF-01b, used in TF-06's policy objective, but not explicitly connected to TF-05's gain discussion. The gain on an observation channel should relate to the CIY of the action that generated that observation.
 - Fix: Add a brief note in TF-05 connecting channel-specific gain to the CIY framework.
 
@@ -96,7 +96,7 @@ All unfixed items from the combined Claude/Codex/Gemini audit (Session 5), earli
 - Risk: without boundaries in the core set, the universality claim appears unfalsifiable.
 - Fix: Create a dedicated TF appendix (Appendix B?) or short TF document explicitly stating where TFT does NOT apply and why.
 
-**C3. Core Theorems vs Discussion Claims index** (Codex next steps)
+**C3. Core Theorems vs Discussion Claims index** ~~DONE (Session 6)~~ (Codex next steps)
 - The theory mixes formal propositions (4.1, 7.1, 8.1, 6.5.1, A.1-A.3) with discussion-grade claims throughout.
 - An index distinguishing "proven under stated assumptions" from "argued but not formally derived" would help reviewers.
 - Fix: Add a table to README or TF-00.
