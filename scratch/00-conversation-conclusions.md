@@ -332,14 +332,99 @@ All TF documents now have explicit epistemic status labels:
 
 5. **README: Updated** with TF-00, resolved items, multi-channel T definition.
 
+### Session 3b: Second Review Round + Theorem Pass
+
+Second round of Codex/Gemini feedback (scratch/05, scratch/06) converged on
+same priorities: proof discipline, CIY identifiability, TF-03 resolution.
+
+Changes made:
+
+6. **Formal theorem pass** — three propositions added:
+   - Prop 4.1 (Mismatch Inevitability): in TF-04. Proves E[|δ|²] > 0
+     from TF-01 scope + TF-02 model axiom + S(M) < 1.
+   - Prop 7.1 (Structural Adaptation Necessity): in TF-07. Proves
+     parametric convergence + low F(M) → floor on mismatch.
+   - Prop 8.1 (Persistence Threshold): in TF-08. Solves ODE, shows
+     T > ρ necessary for bounded mismatch. Notes robustness beyond
+     linear dynamics.
+
+7. **TF-05: Representation layer caveat.** Additive update rule operates
+   in transformed space for multiplicative paradigms (Bayesian = additive
+   in log-prob space). One paragraph, preserves universality claim.
+
+8. **TF-07: Structural overfitting.** Added opposite failure mode — model
+   too expressive, memorizes noise, δ → 0 spuriously. Connects to TF-02
+   information bottleneck (marginal complexity cost exceeds marginal
+   predictive gain). Structural adaptation is bidirectional.
+
+9. **TF-06.5: Cost of Deliberation.** New document. Derives deliberation
+   threshold: Δη* · |δ_post| > ρ · Δτ. Consequences: high-ρ penalizes
+   deliberation (formalizes Boyd), diminishing returns → optimal Δτ*,
+   implicit action as high-tempo limit.
+
+10. **TF-08: Tensor tempo flag.** Added as Open Question #4. Scalar T
+    assumes isotropic adaptive capacity; real systems have dimensional
+    variation. Positive-definite condition T - diag(ρ) for full treatment.
+
+### Session 3c: Items 4, 6, 8 + Lyapunov Assessment
+
+11. **TF-01b: CIY identifiability section.** Three regimes: (a) with
+    interventional data (standard for active agents — CIY identifiable by
+    construction since agents DO things and SEE results; randomized action
+    eliminates confounding), (b) observational only (requires DAG or IV
+    assumptions — Pearl's fundamental insight restated), (c) practical
+    implication: exploration diversity determines CIY estimation quality,
+    providing an information-theoretic argument for exploration complementing
+    TF-04's mismatch-based argument.
+
+12. **TF-06: Unified policy objective.** Added formal objective:
+    π* = argmax[E[value] + λ(M_t) · E[CIY]]. λ depends on U_M, time
+    horizon, ρ. Noted structural isomorphism with active inference's
+    expected free energy (extrinsic + epistemic value). Key distinction:
+    TFT grounds exploration in *causal* information specifically, not
+    entropy reduction generally — not all uncertainty reduction is equally
+    valuable. Epistemic status: discussion-grade, not yet derived.
+
+13. **TF-08: Strengthened nonlinear dynamics note.** Expanded Open Q #1
+    with specific plausible nonlinearities: saturation at large δ,
+    threshold/dead-zone effects, structural breakdown. Linear form
+    reframed as local Taylor approximation near steady state. Forward
+    reference to potential Lyapunov analysis.
+
+### Session 3d: Lyapunov Stability Analysis
+
+14. **scratch/07-lyapunov-stability-analysis.md** — Full working draft.
+    Results:
+    - L.1 (Bounded Mismatch): Generalizes Prop 8.1 to nonlinear dynamics
+      via sector-condition Lyapunov. $R^* = \rho/\alpha$ where α is the
+      sector bound (= T in linear case). Clean and complete.
+    - L.2 (Stability Margin): Adaptive reserve Δρ* = αR - ρ. Simple
+      corollary, immediately useful concept.
+    - L.3 (Adversarial Destabilization): A destabilizes B when
+      T_A > Δρ*_B / γ_A. Captures asymmetric coupling, finite reserves,
+      structural collapse. Strongest and most novel result.
+    - L.3.1 (Effects Spiral): Boyd's cascading disorientation as positive-
+      feedback Lyapunov instability. Genuinely novel formalization.
+    - L.4 (Multi-Timescale): Sketch only. Singular perturbation approach
+      for temporal nesting. Needs better specification of slow dynamics G.
+
+    Assessment: L.1-L.3 ready for promotion to TF-08 or appendix.
+    L.4 stays in scratch. Key value: persistence and adversarial results
+    no longer contingent on linear hypothesis.
+
+    Document also explicitly notes what Lyapunov will NOT illuminate:
+    quantitative steady states, convergence rates, optimal gain structure,
+    explore-exploit balance, model sufficiency, causal structure.
+
 ### Still Pending from Reviews
 
-- Convert central claims to explicit theorem/proof-sketch format
 - TF-03 track decision (minimal async vs. full stochastic process)
 - Scope boundaries as first-class document
-- Gemini suggestions: Lyapunov framing, reward-as-value-channel, tensor T,
-  IB-based structural adaptation threshold
+- Gemini suggestion: reward-as-value-channel
 - Citation confidence tiers for v7 references
+- Formal derivation of λ(M_t) from first principles (hard — may require
+  Bayes-optimal decision theory or Gittins-like analysis)
+- Decision: promote L.1-L.3 into TF-08 or create dedicated appendix?
 
 ### Notes on Evolution of TF-01
 

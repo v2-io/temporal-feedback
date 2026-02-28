@@ -18,6 +18,7 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 | [TF-04](TF-04.md) | The Mismatch Signal | Derived | Draft |
 | [TF-05](TF-05.md) | The Update Gain | Derived + Empirical Claim | Draft |
 | [TF-06](TF-06.md) | Action Selection | Derived + Discussion | Draft |
+| [TF-06.5](TF-06.5.md) | The Cost of Deliberation | Derived | Draft — will renumber when stable |
 | [TF-07](TF-07.md) | Structural Adaptation | Derived + Empirical | Draft |
 | [TF-08](TF-08.md) | Temporal Nesting and Adaptive Tempo | Derived + Hypothesis | Draft |
 
@@ -45,8 +46,9 @@ From these, the remaining results follow:
 - The **mismatch signal** (TF-04) exists as a consequence of having a predictive model in an uncertain world. TF-01b adds that this signal, when conditioned on the agent's action, carries *interventional* (causal) information.
 - The **update gain** (TF-05) balances model uncertainty against observation uncertainty, with the Kalman gain, Bayesian posterior weight, and RL learning rate as special cases of a common form.
 - **Action selection** (TF-06) is a function of the model, with implicit/habitual action as the norm and deliberation as the fallback. The exploration-exploitation trade-off connects to maximizing causal information yield (TF-01b).
-- **Structural adaptation** (TF-07) — changing the model class, not just its parameters — is necessary when the model class itself is inadequate.
-- **Temporal nesting** (TF-08) and the concept of **adaptive tempo** ($\mathcal{T} = \sum_k \nu^{(k)} \cdot \eta^{(k)*}$) yield the persistence threshold and formalize adversarial advantage.
+- **The cost of deliberation** (TF-06.5) formalizes the trade-off between action quality and timeliness: deliberation is justified iff the gain in update quality exceeds the mismatch accumulated during the deliberation period. This derives Boyd's insight about over-deliberation in high-tempo environments.
+- **Structural adaptation** (TF-07) — changing the model class, not just its parameters — is necessary when the model class itself is inadequate (Proposition 7.1). The opposite failure mode, structural *overfitting*, is also addressed: when the model class is too expressive and memorizes noise.
+- **Temporal nesting** (TF-08) and the concept of **adaptive tempo** ($\mathcal{T} = \sum_k \nu^{(k)} \cdot \eta^{(k)*}$) yield the persistence threshold (Proposition 8.1) and formalize adversarial advantage.
 
 ## What's Probably Missing
 

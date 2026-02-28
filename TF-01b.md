@@ -93,6 +93,23 @@ The difference — the causal information yield — measures how much of the act
 
 Maximizing causal information yield is exactly what good exploration (TF-06) does: choosing actions whose consequences are maximally informative about the causal structure of the environment.
 
+## CIY Identifiability
+
+The CIY definition above involves $\Omega_t$ — the true environment state — which the agent cannot observe directly. This raises the question: when can CIY actually be *estimated* from observable quantities?
+
+**With interventional data (the typical case for active agents).** An agent that *varies* its actions across similar model states and observes the resulting distribution of outcomes can estimate CIY empirically. The key is action variation: if $a_{t-1}$ varies while $M_{t-1}$ is approximately held constant, the dependence $I(o_t; a_{t-1} \mid M_{t-1})$ can be estimated from the observed joint distribution. The confounding term $I(o_t; a_{t-1} \mid \Omega_t, M_{t-1})$ is harder — but in randomized experimentation (the gold standard), the agent's action is independent of hidden confounders by construction, making the confounding term zero and CIY equal to the full mutual information $I(o_t; a_{t-1} \mid M_{t-1})$.
+
+This is the standard situation in RL (the agent tries different actions and observes rewards), experimental science (randomized trials), and active sensing (the agent chooses where to look). In all these cases, CIY is identifiable because the agent generates interventional data by definition — it *does* things and *sees what happens*.
+
+**With observational data only (passive or constrained agents).** When the agent cannot freely vary its actions — because actions are policy-constrained, because the environment penalizes exploration, or because the agent is nearly passive — CIY estimation requires additional assumptions. Specifically, it requires either:
+- A causal graph (DAG) with known structure, enabling do-calculus adjustment
+- Instrumental variables that affect actions but not outcomes except through the causal pathway
+- Assumptions about the functional form of confounding
+
+Without such assumptions, CIY is not identifiable from observational data alone. This is Pearl's fundamental insight restated in our formalism: *you cannot learn causal structure from correlations without either experiments or causal assumptions*.
+
+**Practical implication.** For the purposes of TFT, the important point is that *active agents have access to interventional data as a consequence of acting*. The quality of CIY estimation depends on the diversity of actions taken (exploration, TF-06) and the stability of the model state during estimation. An agent that always takes the same action in a given model state learns nothing about causal structure — its CIY estimate is zero regardless of actual causal coupling. This provides an *information-theoretic argument for exploration* that complements the mismatch-based argument in TF-04.
+
 ## Connection to Temporal Continuity
 
 The causal structure has a specific implication for agent identity and continuity: an agent's causal history is **unique and non-forkable**. If the model state $M_t$ is a sufficient statistic for $\mathcal{H}_t$ (TF-02), and $\mathcal{H}_t$ is a unique temporal sequence, then $M_t$ represents a *singular causal trajectory*. Duplicating $M_t$ and exposing the copies to different future events creates two agents with *divergent* causal histories, neither of which is a sufficient statistic for the other's trajectory.
