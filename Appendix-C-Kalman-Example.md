@@ -23,7 +23,7 @@ The agent tracks scalar state $x_t$ and chooses sensor mode $a_t \in \{L, H\}$:
 
 - $\Omega_t = x_t$ is partially observed via noisy channel.
 - $\mathcal{A} = \{L, H\}$ is non-empty and causally affects observation quality (action-dependent observation function, TF-01).
-- Residual uncertainty persists ($H(\Omega_t \mid \mathcal{H}_t) > 0$) due to process and sensor noise.
+- Residual uncertainty persists ($H(\Omega_t \mid \mathcal{C}_t) > 0$) due to process and sensor noise.
 
 ## C.2 TF-02 (Causal Structure + CIY)
 

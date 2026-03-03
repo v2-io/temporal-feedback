@@ -33,7 +33,7 @@ The document structure is modeled on [Temporal Software Theory](../temporal-soft
 
 ## Reading Guide
 
-**Core theorem path** (minimal chain for the main formal results): TF-01 (scope) → TF-03 (model) → TF-05 (mismatch) → TF-06 (gain) → TF-11 (tempo & persistence) → Appendix A (Lyapunov stability). This chain contains the main formal backbone and can be read in ~45 minutes. [Appendix E](Appendix-E-TFT-Core.md) presents this chain as a self-contained condensed reference.
+**Core theorem path** (minimal chain for the main formal results): TF-01 (scope) → TF-03 (model) → TF-05 (mismatch) → TF-06 (gain) → TF-11 (tempo & persistence) → Appendix A (Lyapunov stability). This chain contains the main formal backbone and can be read in ~45 minutes. [Appendix E](Appendix-E-TFT-Core.md) presents this chain as a self-contained condensed reference. TF-00 defines the five-phase loop vocabulary — Prolepsis, Aisthesis, Aporia, Epistrophe, Praxis — used throughout the documents.
 
 **Supporting material**: TF-00 (notation — consult as needed), TF-02 (causal structure — foundational but conceptual), TF-04 (event-driven dynamics — generalizes discrete-time notation), TF-07 (action selection), TF-08 (exploration-exploitation), TF-09 (deliberation cost), TF-10 (structural adaptation). These enrich the theory with conceptual depth and domain connections but are not required for the main formal results.
 
@@ -114,18 +114,6 @@ These are not exhaustive, but they target the theory's most load-bearing claims.
 
 ## TODO
 
-- **Name the loop phases using Greek philosophical terms.** The adaptive feedback loop has five steps that currently lack canonical names in TFT. Proposed phase names, chosen for precision and to mark TFT as a logogenic theory:
-
-  | Phase | Greek | Meaning | TFT Step |
-  |-------|-------|---------|----------|
-  | **Prolepsis** (πρόληψις) | Anticipation; Stoic preconception through which experience is interpreted | Model generates prediction: $\hat{o}_t = \mathbb{E}[o_t \mid M_{t-1}, a_{t-1}]$ |
-  | **Aisthesis** (αἴσθησις) | Perception; raw sensory contact between agent and world | Observation arrives: $o_t$ |
-  | **Aporia** (ἀπορία) | Perplexity; the moment of recognizing you don't know what you thought you knew | Mismatch signal: $\delta_t = o_t - \hat{o}_t$ |
-  | **Epistrophe** (ἐπιστροφή) | A turning toward; the model turns toward reality proportionally | Gain-weighted update: $M_t = M_{t-1} + \eta^* \cdot g(\delta_t)$ |
-  | **Praxis** (πρᾶξις) | Action informed by understanding; distinguished from mere motion | Action selection: $a_t = \pi(M_t)$ |
-
-  These should be integrated into TF-00 (notation), referenced in the Reading Guide, and used consistently across the TF documents. The loop itself does not require an acronym — the terms carry their own weight.
-
 - **Decompose TF-02, which is overloaded.** TF-02 is the causal structure axiom — "time has a direction." But it currently also houses material that belongs where it first becomes load-bearing:
 
   - **TF-02 should keep**: The axiom (temporal arrow), causality as temporal ordering, Pearl's three levels of epistemic access (direct consequence of the axiom), and the coupling strength spectrum.
@@ -133,10 +121,6 @@ These are not exhaustive, but they target the theory's most load-bearing claims.
   - **Agent identity / clone problem → separate as its own discussion-grade TF or appendix.** Not used by any downstream formal result; currently TF-02 itself says "skip if on theorem track."
 
   Guiding principle: each TF-NN should name one principle piece of the theory, following the TST convention where T-NN is synonymous with the theorem/formulation it names.
-
-- **Notation near-collisions to resolve.** Two symbol overlaps create unnecessary friction:
-  - $T$ is the transition function (TF-01), while $T_h$ is the finite prediction horizon (TF-03 operational sufficiency). These are unrelated uses of the same letter. Consider $\ell_h$, $N_h$, or another symbol for the horizon.
-  - $H(\cdot)$ is Shannon entropy (standard), while $\mathcal{H}_t$ is the interaction history. The calligraphic vs. italic distinction is clear in typeset math but easy to confuse in speech and handwriting. Consider $\mathcal{C}_t$ (for "chronica") or similar for the history.
 
 - **Restructure TF-03: move recursive update to TF-02, defer $S$ to where it's load-bearing.** TF-03 currently presents the recursive update $M_t = f(M_{t-1}, o_t, a_{t-1})$ as "derived" from model sufficiency ($S \approx 1$). This is misleading — the recursive form follows from the arrow of time (TF-02) plus the definition of model state as the agent's complete internal state, not from sufficiency. Sufficiency tells you how *good* the recursion is, not whether you *can* recurse. As currently written, TF-03 appears to derive "what it takes to be adaptive" when it's really defining the scope of analysis.
 
@@ -149,8 +133,6 @@ These are not exhaustive, but they target the theory's most load-bearing claims.
   - **Defer $S(M_t)$, $S_\Pi(M_t)$, and $\mathcal{F}(\mathcal{M})$ to where they're first load-bearing.** The sufficiency score is not needed for the information bottleneck (which uses raw mutual information, not the normalized ratio). $S$ is primarily machinery for TF-10's Proposition 10.1 (structural adaptation necessity) and secondarily for TF-05's bridge to mismatch inevitability. Introducing $S$ in TF-03 — six documents before it's formally needed — creates the false impression that it's a prerequisite for the IB and recursive update. Consider: introduce $S$ and $\mathcal{F}$ just before TF-10, or as a standalone brief TF between TF-05 and TF-10, so each concept arrives where the reader needs it.
 
   - **Open question for the recursive update proof**: TF-03 currently provides no bounds on per-step information loss when $S < 1$ — how much the recursive approximation degrades compared to (infeasible) batch reprocessing, and whether this error compounds, stabilizes, or self-corrects through the feedback loop. This gap should be addressed, possibly as part of the $S$ discussion wherever it lands.
-
-- **Consider tightening the scope condition to require $|\mathcal{A}| \geq 2$ (at least a binary choice of actions).** Currently TF-01 requires only $\mathcal{A} \neq \emptyset$, which admits $|\mathcal{A}| = 1$ — an agent with a single available action. Such an agent satisfies the scope condition but gains nothing from the action-dependent results: CIY is trivially zero (no interventional contrast), Level 2 epistemic access is unavailable, and the exploration-exploitation framework (TF-08) is void. The gap between "in scope" and "benefiting from the theory's action-dependent machinery" suggests the scope condition is too permissive. Requiring at least a binary choice — {act, refrain}, or any two distinct actions — would align the scope with the theory's actual power and may surface interesting results in the minimal $|\mathcal{A}| = 2$ case, where the agent has maximal interventional contrast per action but minimal optionality.
 
 ## Planned Companion Documents
 

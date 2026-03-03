@@ -26,7 +26,7 @@ $$\mu_i(t+1) = \mu_i(t) + w_i(t), \quad w_i(t) \sim \mathcal{N}(0, q), \quad q =
 - **Environment state**: $\Omega_t = (\mu_1(t), \ldots, \mu_4(t))$ --- the vector of true reward means. Not directly observable.
 - **Observation space**: $\mathcal{O} = \mathbb{R}$ --- a scalar reward, observed only for the chosen arm.
 - **Action space**: $\mathcal{A} = \{1, 2, 3, 4\}$.
-- **Residual uncertainty**: $H(\Omega_t \mid \mathcal{H}_t) > 0$ because (a) each arm's mean drifts continuously (process noise $q$), (b) rewards are noisy ($\sigma^2 = 1$), and (c) only one arm is observed per step, leaving three arms entirely unobserved. The system is squarely within $\mathcal{S}_{\text{TFT}}$.
+- **Residual uncertainty**: $H(\Omega_t \mid \mathcal{C}_t) > 0$ because (a) each arm's mean drifts continuously (process noise $q$), (b) rewards are noisy ($\sigma^2 = 1$), and (c) only one arm is observed per step, leaving three arms entirely unobserved. The system is squarely within $\mathcal{S}_{\text{TFT}}$.
 
 ## D.2 TF-02 (Causal Structure + CIY)
 
@@ -61,7 +61,7 @@ The Q-learning agent maintains:
 *[Formulation]*
 $$M_t = (\hat{\mu}_1, \ldots, \hat{\mu}_4,\; n_1, \ldots, n_4)$$
 
-where $\hat{\mu}_i$ is the running estimate of arm $i$'s mean reward and $n_i$ is the visit count. This is a compression $\phi(\mathcal{H}_t)$ of the interaction history --- a lossy one that retains only per-arm sample means and counts.
+where $\hat{\mu}_i$ is the running estimate of arm $i$'s mean reward and $n_i$ is the visit count. This is a compression $\phi(\mathcal{C}_t)$ of the interaction history --- a lossy one that retains only per-arm sample means and counts.
 
 **Model sufficiency**: $S(M_t) < 1$ for two reasons:
 

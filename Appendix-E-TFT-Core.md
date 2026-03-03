@@ -8,28 +8,28 @@
 
 TFT applies to any agent-environment pair where the agent observes, acts, and faces residual uncertainty:
 
-$$\mathcal{S}_{\text{TFT}} = \{(Agent, \Omega) : \mathcal{O} \neq \emptyset, \; \mathcal{A} \neq \emptyset, \; H(\Omega_t \mid \mathcal{H}_t) > 0 \}$$
+$$\mathcal{S}_{\text{TFT}} = \{(Agent, \Omega) : \mathcal{O} \neq \emptyset, \; |\mathcal{A}| \geq 2, \; H(\Omega_t \mid \mathcal{C}_t) > 0 \}$$
 
-Observations are lossy: $o_t = h(\Omega_t, a_{t-1}, \varepsilon_t)$. Actions affect the environment: $\Omega_{t+1} \sim T(\cdot \mid \Omega_t, a_t)$.
+Observations are lossy: $o_t = h(\Omega_t, a_{t-1}, \varepsilon_t)$. Actions affect the environment: $\Omega_{t+1} \sim T(\cdot \mid \Omega_t, a_t)$. The binary-action minimum ($|\mathcal{A}| \geq 2$) ensures at least one interventional contrast exists.
 
 ## 1.5 Causal Structure (TF-02, Axiom)
 
-The interaction history $\mathcal{H}_t = (o_1, a_1, \ldots, a_{t-1}, o_t)$ is temporally ordered and irreversible. This ordering grounds three levels of epistemic access (Pearl's causal hierarchy): **associational** ($P(o_t \mid \mathcal{H}_{<t})$), **interventional** ($P(o_t \mid do(a_{t-1}), M_{t-1})$), and **counterfactual** ($P(o_t^{a'} \mid a_{t-1} = a, o_t = o)$). The **causal information yield** $\text{CIY}_q(a; M)$ — the expected KL divergence between the interventional outcome distribution of action $a$ and alternatives drawn from reference $q$ — measures how much an action reveals about causal structure. CIY is non-negative by construction, requires action variation for estimation (see TF-02 identifiability gate), and drives the exploration term in the policy objective (Section 5 below, TF-08).
+The interaction history $\mathcal{C}_t = (o_1, a_1, \ldots, a_{t-1}, o_t)$ is temporally ordered and irreversible. This ordering grounds three levels of epistemic access (Pearl's causal hierarchy): **associational** ($P(o_t \mid \mathcal{C}_{<t})$), **interventional** ($P(o_t \mid do(a_{t-1}), M_{t-1})$), and **counterfactual** ($P(o_t^{a'} \mid a_{t-1} = a, o_t = o)$). The **causal information yield** $\text{CIY}_q(a; M)$ — the expected KL divergence between the interventional outcome distribution of action $a$ and alternatives drawn from reference $q$ — measures how much an action reveals about causal structure. CIY is non-negative by construction, requires action variation for estimation (see TF-02 identifiability gate), and drives the exploration term in the policy objective (Section 5 below, TF-08).
 
 ## 2. The Model (TF-03, Formulation)
 
-Any persisting agent is analyzed as maintaining a **model** $M_t = \phi(\mathcal{H}_t) \in \mathcal{M}$ — a compression of its interaction history.
+Any persisting agent is analyzed as maintaining a **model** $M_t = \phi(\mathcal{C}_t) \in \mathcal{M}$ — a compression of its interaction history.
 
 **Model sufficiency:**
-$$S(M_t) = 1 - \frac{I(\mathcal{H}_t;\, o_{t+1:\infty} \mid M_t, a_{t:\infty})}{I(\mathcal{H}_t;\, o_{t+1:\infty} \mid a_{t:\infty})} \in [0,1]$$
+$$S(M_t) = 1 - \frac{I(\mathcal{C}_t;\, o_{t+1:\infty} \mid M_t, a_{t:\infty})}{I(\mathcal{C}_t;\, o_{t+1:\infty} \mid a_{t:\infty})} \in [0,1]$$
 
 When $S \approx 1$, the model supports recursive updating: $M_t = f(M_{t-1}, o_t, a_{t-1})$.
 
 **Model class fitness:** $\mathcal{F}(\mathcal{M}) = \sup_{M \in \mathcal{M}} S(M)$. The best achievable sufficiency given the model class.
 
-## 3. The Mismatch Signal (TF-05, Derived)
+## 3. Prolepsis → Aisthesis → Aporia: The Mismatch Signal (TF-05, Derived)
 
-The model predicts; reality delivers. Their difference is the mismatch:
+The model anticipates (*prolepsis*); reality responds (*aisthesis*). Their difference is the mismatch — *aporia*:
 
 $$\delta_t = o_t - \hat{o}_t, \quad \hat{o}_t = \mathbb{E}[o_t \mid M_{t-1}, a_{t-1}]$$
 
@@ -39,9 +39,9 @@ $$\mathbb{E}[\|\delta_t\|^2] = \underbrace{\mathbb{E}[\|\hat{o}_t - \bar{o}_t\|^
 
 whenever observation noise is non-degenerate or the model's predictive mean is misspecified.
 
-## 4. The Update Gain (TF-06, Empirical Claim)
+## 4. Epistrophe: The Update Gain (TF-06, Empirical Claim)
 
-The model incorporates mismatch through: $M_t = M_{t-1} + \eta(M_{t-1}) \cdot g(\delta_t)$.
+The model turns toward reality (*epistrophe*): $M_t = M_{t-1} + \eta(M_{t-1}) \cdot g(\delta_t)$.
 
 **Uncertainty ratio principle.** The optimal gain has the structural form:
 
