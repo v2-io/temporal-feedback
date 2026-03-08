@@ -28,7 +28,7 @@ $$\mu_i(t+1) = \mu_i(t) + w_i(t), \quad w_i(t) \sim \mathcal{N}(0, q), \quad q =
 - **Action space**: $\mathcal{A} = \{1, 2, 3, 4\}$.
 - **Residual uncertainty**: $H(\Omega_t \mid \mathcal{C}_t) > 0$ because (a) each arm's mean drifts continuously (process noise $q$), (b) rewards are noisy ($\sigma^2 = 1$), and (c) only one arm is observed per step, leaving three arms entirely unobserved. The system is squarely within $\mathcal{S}_{\text{TFT}}$.
 
-## D.2 TF-02 (Causal Structure + CIY)
+## D.2 TF-02 (Causal Structure) + TF-08 (CIY)
 
 *Mapping status: exact for causal ordering; approximate for CIY formula.*
 

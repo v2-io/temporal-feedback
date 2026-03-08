@@ -25,12 +25,12 @@ The agent tracks scalar state $x_t$ and chooses sensor mode $a_t \in \{L, H\}$:
 - $\mathcal{A} = \{L, H\}$ is non-empty and causally affects observation quality (action-dependent observation function, TF-01).
 - Residual uncertainty persists ($H(\Omega_t \mid \mathcal{C}_t) > 0$) due to process and sensor noise.
 
-## C.2 TF-02 (Causal Structure + CIY)
+## C.2 TF-02 (Causal Structure) + TF-08 (CIY)
 
 *Mapping status: exact.*
 
 Action precedes observation and changes $P(y_t \mid do(a_t))$ through $r_{a_t}$.
-Using low mode as comparator action ($q(a') = \mathbf{1}[a' = L]$) — equivalent to the policy-induced default convention (TF-02) in this binary-action case — the canonical CIY is the interventional KL divergence:
+Using low mode as comparator action ($q(a') = \mathbf{1}[a' = L]$) — equivalent to the policy-induced default convention (TF-08) in this binary-action case — the canonical CIY is the interventional KL divergence:
 
 *[Worked Quantity]*
 $$\text{CIY}(H) = D_{\mathrm{KL}}\!\big(P(y \mid do(H)) \,\|\, P(y \mid do(L))\big)$$

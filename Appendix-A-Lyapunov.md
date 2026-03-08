@@ -35,7 +35,7 @@ A Lyapunov approach[^khalil2002] proves persistence and stability under much wea
 
 4. **Exploration-exploitation balance.** The CIY-integrated policy objective (TF-07 or TF-08) is a decision-theoretic question, not a stability question. Lyapunov might give a *constraint* on policy (don't let mismatch leave the basin), but not the *optimal* policy.
 
-5. **Model sufficiency.** TF-03's information bottleneck and sufficient statistic framework is information-theoretic. Lyapunov adds nothing to it directly — though the *consequences* of sufficiency (how fast mismatch decays) are exactly what Lyapunov analyzes.
+5. **Model sufficiency.** The information bottleneck (TF-03) and sufficient statistic framework (TF-10) are information-theoretic. Lyapunov adds nothing to them directly — though the *consequences* of sufficiency (how fast mismatch decays) are exactly what Lyapunov analyzes.
 
 6. **Causal structure.** TF-02's causality grounding is about the temporal ordering of events and Pearl's hierarchy — prior to and independent of dynamical stability.
 
